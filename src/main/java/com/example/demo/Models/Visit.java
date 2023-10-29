@@ -2,13 +2,39 @@ package com.example.demo.Models;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Visit {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer visitId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Patient patient;
+
     private Date date;
     private String disase;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Doctor doctor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cabinet_id", insertable = false, updatable = false)
     private Cabinet cabinet;
+
+    public Visit() {
+        // FOR SPRING | DO NOT DELETE
+    }
 
     public Visit(Patient patient, Date date, String disase, Doctor doctor, Cabinet cabinet) {
         this.patient = patient;
@@ -18,21 +44,12 @@ public class Visit {
         this.cabinet = cabinet;
     }
 
-    public Visit(Integer id, Patient patient, Date date, String disase, Doctor doctor, Cabinet cabinet) {
-        this.id = id;
-        this.patient = patient;
-        this.date = date;
-        this.disase = disase;
-        this.doctor = doctor;
-        this.cabinet = cabinet;
+    public Integer getVisitId() {
+        return visitId;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setVisitId(Integer id) {
+        this.visitId = id;
     }
 
     public Patient getPatient() {

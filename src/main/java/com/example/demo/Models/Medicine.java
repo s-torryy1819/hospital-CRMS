@@ -3,15 +3,28 @@ package com.example.demo.Models;
 import com.example.demo.Exceptions.MedicineException;
 import com.example.demo.Exceptions.MedicineExceptionReason;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Medicine {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer medicineId;
+
     private String nameOfMedicine;
     private String description;
     private Integer availableInStock;
     private Double price;
     private Boolean needReceipt;
 
-    // TODO: for each new Medicine automatically set id
+    public Medicine() {
+        // FOR SPRING | DO NOT DELETE
+    }
+
     public Medicine(String nameOfMedicine, String description, Integer availableInStock, Double price,
             Boolean needReceipt) {
         this.nameOfMedicine = nameOfMedicine;

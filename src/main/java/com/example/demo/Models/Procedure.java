@@ -1,34 +1,48 @@
 package com.example.demo.Models;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Procedure {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer procedureId;
+
     private String description;
     private Double price;
-    private Integer cabinetNumber;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cabinet_id", insertable = false, updatable = false)
+    private Cabinet cabinet;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Doctor doctor;
 
-    public Procedure(Integer id, String description, Double price, Integer cabinetNumber, Doctor doctor) {
-        this.id = id;
+    public Procedure() {
+        // FOR SPRING | DO NOT DELETE
+    }
+
+    public Procedure(String description, Double price, Cabinet cabinet, Doctor doctor) {
         this.description = description;
         this.price = price;
-        this.cabinetNumber = cabinetNumber;
+        this.cabinet = cabinet;
         this.doctor = doctor;
     }
 
-    // TODO: for each new Procedure automatically set id
-    public Procedure(String description, Double price, Integer cabinetNumber, Doctor doctor) {
-        this.description = description;
-        this.price = price;
-        this.cabinetNumber = cabinetNumber;
-        this.doctor = doctor;
+    public Integer getProcedureId() {
+        return procedureId;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setProcedureId(Integer id) {
+        this.procedureId = id;
     }
 
     public String getDescription() {
@@ -47,20 +61,20 @@ public class Procedure {
         this.price = price;
     }
 
-    public Integer getCabinetNumber() {
-        return cabinetNumber;
-    }
-
-    public void setCabinetNumber(Integer cabinetNumber) {
-        this.cabinetNumber = cabinetNumber;
-    }
-
     public Doctor getDoctor() {
         return doctor;
     }
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+    }
+
+    public Cabinet getCabinet() {
+        return cabinet;
+    }
+
+    public void setCabinet(Cabinet cabinet) {
+        this.cabinet = cabinet;
     }
 
 }

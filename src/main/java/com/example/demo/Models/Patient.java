@@ -2,8 +2,15 @@ package com.example.demo.Models;
 
 import java.util.List;
 
-public class Patient {
-    private Integer id;
+import com.example.demo.Security.Models.User;
+
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+
+@Entity
+public class Patient extends User {
+
     private String name;
     private String surname;
     private Integer yearOfBirth;
@@ -11,9 +18,14 @@ public class Patient {
     private String phone;
     private String workAddress;
     private Boolean disability;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> chronicDiseases;
 
-    // TODO: for each new Patient automatically set id
+    public Patient() {
+        // FOR SPRING | DO NOT DELETE
+    }
+
     public Patient(String name, String surname, Integer yearOfBirth, String address, String phone, String workAddress,
             Boolean disability, List<String> chronicDiseases) {
         this.name = name;
@@ -24,27 +36,6 @@ public class Patient {
         this.workAddress = workAddress;
         this.disability = disability;
         this.chronicDiseases = chronicDiseases;
-    }
-
-    public Patient(Integer id, String name, String surname, Integer yearOfBirth, String address, String phone,
-            String workAddress, Boolean disability, List<String> chronicDiseases) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.yearOfBirth = yearOfBirth;
-        this.address = address;
-        this.phone = phone;
-        this.workAddress = workAddress;
-        this.disability = disability;
-        this.chronicDiseases = chronicDiseases;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -2,22 +2,40 @@ package com.example.demo.Models;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class DoctorAppointment {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer DoctorAppointmentId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Doctor doctor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Patient patient;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cabinet_id", insertable = false, updatable = false)
     private Cabinet cabinet;
+
     private Date date;
 
-    public DoctorAppointment(Doctor doctor, Patient patient, Cabinet cabinet, Date date) {
-        this.doctor = doctor;
-        this.patient = patient;
-        this.cabinet = cabinet;
-        this.date = date;
+    public DoctorAppointment() {
+        // FOR SPRING | DO NOT DELETE
     }
 
-    public DoctorAppointment(Integer id, Doctor doctor, Patient patient, Cabinet cabinet, Date date) {
-        this.id = id;
+    public DoctorAppointment(Doctor doctor, Patient patient, Cabinet cabinet, Date date) {
         this.doctor = doctor;
         this.patient = patient;
         this.cabinet = cabinet;
@@ -56,12 +74,12 @@ public class DoctorAppointment {
         this.date = date;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getDoctorAppointmentId() {
+        return DoctorAppointmentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDoctorAppointmentId(Integer id) {
+        this.DoctorAppointmentId = id;
     }
 
 }

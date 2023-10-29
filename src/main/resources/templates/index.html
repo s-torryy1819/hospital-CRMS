@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
 
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"> 
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -41,7 +43,10 @@
 <body>
 
     <div class="container" id="app">
-        <h3>{% lorem 2 b random %}</h3>
+        <h3>Hello <span th:text="${#authentication.name}"></span> !</h3>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Sign Out"/> 
+        </form>
     </div>
 
 </body>

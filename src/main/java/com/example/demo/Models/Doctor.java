@@ -5,9 +5,15 @@ import java.util.List;
 
 import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Exceptions.DoctorExceptionReason;
+import com.example.demo.Security.Models.User;
 
-public class Doctor {
-    private Integer id;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+
+@Entity
+public class Doctor extends User {
+
     private String name;
     private String surname;
     private Integer yearOfBirth;
@@ -17,30 +23,19 @@ public class Doctor {
     private String speciality;
     private Boolean childDoctor;
     private Integer pricePerVisit;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Date> availableTime;
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Date> blockedTime;
 
-    // TODO: for each new Doctor automatically set id
+    public Doctor() {
+        // FOR SPRING | DO NOT DELETE
+    }
+
     public Doctor(String name, String surname, Integer yearOfBirth, String address, String phone, String department,
             String speciality, Boolean childDoctor, Integer pricePerVisit, List<Date> availableTime,
             List<Date> blockedTime) {
-        this.name = name;
-        this.surname = surname;
-        this.yearOfBirth = yearOfBirth;
-        this.address = address;
-        this.phone = phone;
-        this.department = department;
-        this.speciality = speciality;
-        this.childDoctor = childDoctor;
-        this.pricePerVisit = pricePerVisit;
-        this.availableTime = availableTime;
-        this.blockedTime = blockedTime;
-    }
-
-    public Doctor(Integer id, String name, String surname, Integer yearOfBirth, String address, String phone,
-            String department, String speciality, Boolean childDoctor, Integer pricePerVisit, List<Date> availableTime,
-            List<Date> blockedTime) {
-        this.id = id;
         this.name = name;
         this.surname = surname;
         this.yearOfBirth = yearOfBirth;
@@ -86,14 +81,6 @@ public class Doctor {
 
         availableTime.add(date);
         return true;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
