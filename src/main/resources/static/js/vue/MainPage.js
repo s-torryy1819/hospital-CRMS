@@ -1,21 +1,23 @@
 import Dashboard from "./Dashboard.js";
 import HospitalInfo from "./HospitalInfo.js";
 import EmergencyInfo from "./EmergencyInfo.js";
+import Statistics from "./Statistics.js";
 
 export default {
-  components: {
-    Dashboard,
-    HospitalInfo,
-    EmergencyInfo,
-  },
-  data() {
-    return {
-      allPages: ["Dashboard", "HospitalInfo", "EmergencyInfo"],
-      activePage: "Dashboard",
-    };
-  },
-  methods: {},
-  template: `
+    components: {
+        Dashboard,
+        HospitalInfo,
+        EmergencyInfo,
+        Statistics
+    },
+    data() {
+        return {
+            allPages: ["Dashboard", "HospitalInfo", "EmergencyInfo", "Statistics"],
+            activePage: "Dashboard",
+        };
+    },
+    methods: {},
+    template: `
     <br/>
 
     <header>
@@ -33,8 +35,13 @@ export default {
                 </form>
             </div>
 
-            <div class="exit">
-                <button type="button" class="btn btn-secondary">Exit <img src="/images/exit.png" alt="Exit"></button>
+            <div class="center_alignment">
+            
+                <form th:action="@{/logout}" method="post"> 
+                    <input type="submit" value="Sign Out" class="btn-warning text-white exit_btn">
+                    <img src="/images/logout.png" alt="Exit">
+                    </input>
+                </form>
             </div>
 
         </div>
@@ -42,26 +49,25 @@ export default {
 
     <section>
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse navbar navbar-light">
-            <div class="notepad">
+            <div class="center_alignment">
                 <img src="/images/notepad_2.png" alt="Notepad">
             </div>
 
             <div class="position-sticky">
-                <div class="list-group list-group-flush mx-3 mt-4">
+                <div class="list-group list-group-flush mx-4 mt-4">
                     <label class="btn btn-warning text-white" :class="activePage === page ? 'active' : ''" v-for="page in allPages" @click="activePage = page">
-                        <input type="radio" name="allPages" :id="page" />
+                    <i class="bi bi-arrow-right-square"></i><input type="radio" name="allPages" :id="page" />
                         {{page}}
                     </label>
                 </div>
             </div>
-
-            <div class="calendar"></div>
 
         </nav>
   
         <article>
             <dashboard v-if="activePage === 'Dashboard'"></dashboard>
             <hospital-info v-if="activePage === 'HospitalInfo'"></hospital-info>
+            <statistics v-if="activePage === 'Statistics'"></statistics>
             <emergency-info v-if="activePage === 'EmergencyInfo'"></emergency-info>
         </article>
     </section>

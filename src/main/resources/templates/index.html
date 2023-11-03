@@ -44,10 +44,9 @@
 <body>
 
     <div class="container" id="app">
-        <h3>Hello <span th:text="${#authentication.name}"></span> !</h3>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Sign Out"/> 
-        </form>
+        <h3 class="text-light bg-success text_wrapper radius_wrapper">Hello <span th:text="${#authentication.name}"></span> !</h3>
+        <main-page></main-page>
+        
     </div>
 
 </body>
