@@ -1,14 +1,14 @@
-import Appointments from "./Appointments.js";
-import Patients from "./Patients.js";
-import Pharmasy from "./Pharmasy.js";
-import Procedures from "./Procedures.js";
-import Doctors from "./Doctors.js";
-import Cabinets from "./Cabinets.js";
-import AddNewCabinet from "./AddNewCabinet.js";
-import AddNewDoctor from "./AddNewDoctor.js";
-import AddNewPatient from "./AddNewPatient.js";
-import AddNewAppointment from "./AddNewAppointment.js";
-import AddNewMedicine from "./AddNewMedicine.js";
+import Appointments from "../data/Appointments.js";
+import Patients from "../data/Patients.js";
+import Pharmasy from "../data/Pharmasy.js";
+import Procedures from "../data/Procedures.js";
+import Doctors from "../data/Doctors.js";
+import Cabinets from "../data/Cabinets.js";
+import AddNewCabinet from "../addNewData/AddNewCabinet.js";
+import AddNewDoctor from "../addNewData/AddNewDoctor.js";
+import AddNewPatient from "../addNewData/AddNewPatient.js";
+import AddNewAppointment from "../addNewData/AddNewAppointment.js";
+import AddNewMedicine from "../addNewData/AddNewMedicine.js";
 
 export default {
   components: {

@@ -1,22 +1,33 @@
-import Dashboard from "./Dashboard.js";
-import HospitalInfo from "./HospitalInfo.js";
-import EmergencyInfo from "./EmergencyInfo.js";
-import Statistics from "./Statistics.js";
+import Dashboard from "./sideBar/Dashboard.js";
+import HospitalInfo from "./sideBar/HospitalInfo.js";
+import EmergencyInfo from "./sideBar/EmergencyInfo.js";
+import Statistics from "./sideBar/Statistics.js";
+import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
 export default {
     components: {
         Dashboard,
         HospitalInfo,
         EmergencyInfo,
-        Statistics
+        Statistics,
+        axios
     },
     data() {
         return {
+            username: {},
             allPages: ["Dashboard", "HospitalInfo", "EmergencyInfo", "Statistics"],
             activePage: "Dashboard",
         };
     },
-    methods: {},
+    methods: {
+        async getUsername() {
+            const { data } = await axios.get("http://localhost:8080/username");
+            this.username = data;
+        }
+    },
+    created() {
+        this.getUsername();
+    },
     template: `
     <br/>
 
@@ -25,19 +36,31 @@ export default {
 
             <div class="logo_search">
 
-                <div class="header_logo">
-                    <img src="/images/logo.png" alt="Header logo">
-                </div>
-
+            <div class="header_logo end_alignment">
+                <a href="/"><img src="/images/logo.png" alt="Header logo"></a>
+            </div>
+            <div class="end_alignment">
                 <form class="form-inline mr-auto">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search a cabinet..." aria-label="Search">
-                        <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search a Doctor..." aria-label="Search">
+                        <button class="btn-rounded btn-warning text-white exit_btn" type="submit">Search</button>
                 </form>
             </div>
 
-            <div class="center_alignment">
+                <div class="greeting_wrapper bg-info radius_wrapper">
+                    <div>
+                        <img src="/images/woman_doctor.png" alt="Doctor"  style="width: 13vw;" class="woman_doctor_img">
+                    </div>
+                    <div class="greeting">
+                        <h4 class="text-light ">Hello, {{ username }}</h4>
+                        <h3 class="text-light ">Find a Doctor and make an</h3>
+                        <h4 class="text-light ">appointment Online!</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="end_alignment">
             
-                <form th:action="@{/logout}" method="post"> 
+                <form action="/logout" method="post"> 
                     <input type="submit" value="Sign Out" class="btn-warning text-white exit_btn">
                     <img src="/images/logout.png" alt="Exit">
                     </input>

@@ -17,6 +17,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -35,10 +36,10 @@ public class SecurityUserDetailsService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
         user.setAuths(auths);
 
-        createUser(user);
+        saveUser(user);
     }
 
-    public void createUser(final UserDetails user) {
+    public void saveUser(final UserDetails user) {
         userRepository.save((User) user);
     }
 

@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Procedure {
+@Table(name = "health_procedure")
+public class HeathProcedure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,11 +28,11 @@ public class Procedure {
     @JoinColumn(name = "id", insertable = false, updatable = false)
     private Doctor doctor;
 
-    public Procedure() {
+    public HeathProcedure() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Procedure(String description, Double price, Cabinet cabinet, Doctor doctor) {
+    public HeathProcedure(String description, Double price, Cabinet cabinet, Doctor doctor) {
         this.description = description;
         this.price = price;
         this.cabinet = cabinet;

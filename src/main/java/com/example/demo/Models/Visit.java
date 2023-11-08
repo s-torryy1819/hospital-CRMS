@@ -9,8 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "visit")
 public class Visit {
 
     @Id
@@ -22,7 +24,7 @@ public class Visit {
     private Patient patient;
 
     private Date date;
-    private String disase;
+    private String disease;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", insertable = false, updatable = false)
@@ -36,10 +38,10 @@ public class Visit {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Visit(Patient patient, Date date, String disase, Doctor doctor, Cabinet cabinet) {
+    public Visit(Patient patient, Date date, String disease, Doctor doctor, Cabinet cabinet) {
         this.patient = patient;
         this.date = date;
-        this.disase = disase;
+        this.disease = disease;
         this.doctor = doctor;
         this.cabinet = cabinet;
     }
@@ -68,12 +70,12 @@ public class Visit {
         this.date = date;
     }
 
-    public String getDisase() {
-        return disase;
+    public String getDisease() {
+        return disease;
     }
 
-    public void setDisase(String disase) {
-        this.disase = disase;
+    public void setDisease(String disase) {
+        this.disease = disase;
     }
 
     public Doctor getDoctor() {

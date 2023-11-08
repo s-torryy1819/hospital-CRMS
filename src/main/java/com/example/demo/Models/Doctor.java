@@ -19,7 +19,6 @@ public class Doctor extends User {
     private Integer yearOfBirth;
     private String address;
     private String phone;
-    private String department;
     private String speciality;
     private Boolean childDoctor;
     private Integer pricePerVisit;
@@ -33,7 +32,7 @@ public class Doctor extends User {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Doctor(String name, String surname, Integer yearOfBirth, String address, String phone, String department,
+    public Doctor(String name, String surname, Integer yearOfBirth, String address, String phone,
             String speciality, Boolean childDoctor, Integer pricePerVisit, List<Date> availableTime,
             List<Date> blockedTime) {
         this.name = name;
@@ -41,7 +40,6 @@ public class Doctor extends User {
         this.yearOfBirth = yearOfBirth;
         this.address = address;
         this.phone = phone;
-        this.department = department;
         this.speciality = speciality;
         this.childDoctor = childDoctor;
         this.pricePerVisit = pricePerVisit;
@@ -121,14 +119,6 @@ public class Doctor extends User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     public String getSpeciality() {
