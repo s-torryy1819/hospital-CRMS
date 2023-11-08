@@ -15,13 +15,13 @@ import com.example.demo.Models.Medicine;
 import com.example.demo.Models.Patient;
 import com.example.demo.Models.HeathProcedure;
 import com.example.demo.Models.Visit;
+import com.example.demo.Repositories.AppointmentRepository;
+import com.example.demo.Repositories.CabinetRepository;
+import com.example.demo.Repositories.MedicineRepository;
+import com.example.demo.Repositories.ProcedureRepository;
+import com.example.demo.Repositories.UserRepository;
+import com.example.demo.Repositories.VisitRepository;
 import com.example.demo.Security.Models.User;
-import com.example.demo.Security.Services.AppointmentRepository;
-import com.example.demo.Security.Services.CabinetRepository;
-import com.example.demo.Security.Services.MedicineRepository;
-import com.example.demo.Security.Services.ProcedureRepository;
-import com.example.demo.Security.Services.UserRepository;
-import com.example.demo.Security.Services.VisitRepository;
 
 @Controller
 public class DataController {
