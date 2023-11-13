@@ -1,11 +1,11 @@
 package com.example.demo.Models;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Exceptions.DoctorExceptionReason;
@@ -14,6 +14,7 @@ import com.example.demo.Security.Models.User;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Doctor extends User {
@@ -27,12 +28,15 @@ public class Doctor extends User {
     private Boolean childDoctor;
     private Integer pricePerVisit;
 
+    @OneToMany(mappedBy = "Doctor")
+    List<Cabinet> cabinets = new ArrayList<>();
+    @OneToMany(mappedBy = "doctor")
+    List<DoctorAppointment> appointments = new ArrayList<>();
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Date> availableTime;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Date> blockedTime;
-
-    JdbcTemplate template;
 
     public Doctor() {
         // FOR SPRING | DO NOT DELETE
@@ -85,28 +89,6 @@ public class Doctor extends User {
 
         availableTime.add(date);
         return true;
-    }
-
-    public Doctor getDoctorsByUsername(String username) throws SQLException {
-        String sql = "select * from user where username=?";
-        return template.queryForObject(sql, new BeanPropertyRowMapper<Doctor>(Doctor.class),
-                new Object[] { username });
-    }
-
-    public Doctor getDoctorsBySpeciality(String speciality) throws SQLException {
-        String sql = "select * from user where speciality=?";
-        return template.queryForObject(sql, new BeanPropertyRowMapper<Doctor>(Doctor.class),
-                new Object[] { speciality });
-    }
-
-    public Doctor getDoctorsById(int id) throws SQLException {
-        String sql = "select * from user where id =?";
-        return template.queryForObject(sql, new BeanPropertyRowMapper<Doctor>(Doctor.class),
-                new Object[] { id });
-    }
-
-    public void setTemplate(JdbcTemplate template) {
-        this.template = template;
     }
 
     public String getName() {

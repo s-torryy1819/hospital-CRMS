@@ -25,19 +25,28 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username)
             throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not present"));
+        User user = getUserByUsername(username);
         return user;
     }
 
     public void createUser(final String userName, final String password, final List<Authorities> auths) {
+        createUser(password, password, auths, new User());
+    }
 
-        User user = new User();
+    public void createUser(final String userName, final String password, final List<Authorities> auths,
+            final User user) {
+
         user.setUsername(userName);
         user.setPassword(passwordEncoder.encode(password));
         user.setAuths(auths);
 
         saveUser(user);
+
+    }
+
+    public User getUserByUsername(final String username) {
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not present"));
     }
 
     public void saveUser(final UserDetails user) {

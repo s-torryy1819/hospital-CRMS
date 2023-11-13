@@ -21,7 +21,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -62,6 +62,10 @@ public class User implements UserDetails {
 
     public void setAuths(List<Authorities> auths) {
         this.auths = auths;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     @Override

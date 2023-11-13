@@ -1,5 +1,6 @@
 package com.example.demo.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.Security.Models.User;
@@ -7,6 +8,7 @@ import com.example.demo.Security.Models.User;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Patient extends User {
@@ -18,6 +20,10 @@ public class Patient extends User {
     private String phone;
     private String workAddress;
     private Boolean disability;
+    private Integer visitHistoryId;
+
+    @OneToMany(mappedBy = "patient")
+    List<DoctorAppointment> appointments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> chronicDiseases;
@@ -27,7 +33,7 @@ public class Patient extends User {
     }
 
     public Patient(String name, String surname, Integer yearOfBirth, String address, String phone, String workAddress,
-            Boolean disability, List<String> chronicDiseases) {
+            Boolean disability, List<String> chronicDiseases, Integer visitHistoryId) {
         this.name = name;
         this.surname = surname;
         this.yearOfBirth = yearOfBirth;
@@ -36,6 +42,7 @@ public class Patient extends User {
         this.workAddress = workAddress;
         this.disability = disability;
         this.chronicDiseases = chronicDiseases;
+        this.visitHistoryId = visitHistoryId;
     }
 
     public String getName() {
@@ -100,6 +107,14 @@ public class Patient extends User {
 
     public void setChronicDiseases(List<String> chronicDiseases) {
         this.chronicDiseases = chronicDiseases;
+    }
+
+    public Integer getVisitHistoryId() {
+        return visitHistoryId;
+    }
+
+    public void setVisitHistoryId(Integer visitHistoryId) {
+        this.visitHistoryId = visitHistoryId;
     }
 
 }

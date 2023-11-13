@@ -1,13 +1,8 @@
 package com.example.demo.Repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.Models.Cabinet;
-import com.example.demo.Models.Doctor;
 
-public interface CabinetRepository {
+public interface CabinetRepository extends JpaRepository<Cabinet, Integer> {
 
-    Cabinet addCabinet(Cabinet cabinet);
-
-    Cabinet deleteCabinet(Cabinet cabinet);
-
-    Cabinet editCabinet(Cabinet cabinet, String description, Doctor doctor);
 }
