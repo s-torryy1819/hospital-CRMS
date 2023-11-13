@@ -52,8 +52,8 @@ export default {
                     </div>
                     <div class="greeting">
                         <h4 class="text-light ">Hello, {{ username }}</h4>
-                        <h3 class="text-light ">Find a Doctor and make an</h3>
-                        <h4 class="text-light ">appointment Online!</h4>
+                        <h3 class="text-light ">Find a Doctor and see your</h3>
+                        <h4 class="text-light ">appointments Online!</h4>
                     </div>
                 </div>
             </div>

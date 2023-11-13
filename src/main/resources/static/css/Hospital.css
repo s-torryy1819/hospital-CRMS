@@ -139,6 +139,8 @@ a.button:active {
     display: inline-block;
     margin-left: 100px;
     margin-top: 100px;
+
+    position: relative;
 }
 
 .greeting {
@@ -148,8 +150,10 @@ a.button:active {
 
 .woman_doctor_img {
     position: absolute;
-    margin-left: -50px;
-    margin-top: -128px;
+    /* margin-left: -50px;
+    margin-top: -128px; */
+    position: absolute;
+    bottom: 0;
 }
 
 .carousel_wrapper {
@@ -174,6 +178,7 @@ a.button:active {
 }
 
 .emergency_item_wrapper {
+    margin-right: 30px;
     background-color: #f6b253;
 }
 
@@ -190,6 +195,10 @@ a.button:active {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.emergency_text_wrapper {
+    font-size: medium;
 }
 
 .carousel_item {}
