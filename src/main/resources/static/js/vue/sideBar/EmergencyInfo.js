@@ -16,7 +16,8 @@ export default {
                 <img src="/images/emergency.png" alt="Patients" style="width: 20vw;">
               </div><br/>
               <div class="carousel_item text-center">
-                <h3 class="text-white">Emergency? We can help you!</h3>
+                <h3 class="text-white">Emergency?</h3>
+                <h3 class="text-white">We can help you!</h3>
               </div>
             </div>
             <br/>
@@ -27,7 +28,7 @@ export default {
               </div><br/>
               <div class="carousel_item text-center">
                 <h3 class="text-white"><b>Emergency?</b><br/><br/>
-                <b>​Emergency Medical Service: 112</b><br/><br/>
+                <b>Medical Service: 112</b><br/><br/>
                 <div class="emergency_text_wrapper">KV-Notarztdienst (Emergency doctor service provided by health insurance): 116 117
                 Poison Emergency Call: +49 361 – 730730
                 University of Leipzig Medical Center (24/7):

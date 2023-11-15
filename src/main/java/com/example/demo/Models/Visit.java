@@ -1,7 +1,6 @@
 package com.example.demo.Models;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,30 +19,32 @@ public class Visit {
     private Integer visitId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "patientId")
     private Patient patient;
 
-    private Date date;
+    private LocalDate date;
     private String disease;
+    private String purpose;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private Doctor doctor;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cabinet_id", insertable = false, updatable = false)
+    @JoinColumn(name = "cabinetId")
     private Cabinet cabinet;
 
     public Visit() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Visit(Patient patient, Date date, String disease, Doctor doctor, Cabinet cabinet) {
+    public Visit(LocalDate date, String disease, String purpose, Doctor doctor, Cabinet cabinet, Patient patient) {
         this.patient = patient;
         this.date = date;
         this.disease = disease;
         this.doctor = doctor;
         this.cabinet = cabinet;
+        this.purpose = purpose;
     }
 
     public Integer getVisitId() {
@@ -62,11 +63,11 @@ public class Visit {
         this.patient = patient;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -92,6 +93,14 @@ public class Visit {
 
     public void setCabinet(Cabinet cabinet) {
         this.cabinet = cabinet;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
 }

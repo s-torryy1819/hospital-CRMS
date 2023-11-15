@@ -1,11 +1,9 @@
 package com.example.demo.Models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,13 +31,13 @@ public class DoctorAppointment {
     @JoinColumn(name = "cabinetId")
     private Cabinet cabinet;
 
-    private Date date;
+    private LocalDate date;
 
     public DoctorAppointment() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public DoctorAppointment(Doctor doctor, Patient patient, Cabinet cabinet, Date date) {
+    public DoctorAppointment(Doctor doctor, Patient patient, Cabinet cabinet, LocalDate date) {
         this.doctor = doctor;
         this.patient = patient;
         this.cabinet = cabinet;
@@ -70,11 +68,11 @@ public class DoctorAppointment {
         this.cabinet = cabinet;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

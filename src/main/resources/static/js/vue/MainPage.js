@@ -1,7 +1,7 @@
 import Dashboard from "./sideBar/Dashboard.js";
-import HospitalInfo from "./sideBar/HospitalInfo.js";
-import EmergencyInfo from "./sideBar/EmergencyInfo.js";
 import Statistics from "./sideBar/Statistics.js";
+import EmergencyInfo from "./sideBar/EmergencyInfo.js";
+import HospitalInfo from "./sideBar/HospitalInfo.js";
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
 export default {
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             username: {},
-            allPages: ["Dashboard", "HospitalInfo", "EmergencyInfo", "Statistics"],
+            allPages: ["Dashboard", "Statistics", "EmergencyInfo", "HospitalInfo"],
             activePage: "Dashboard",
         };
     },
@@ -52,8 +52,8 @@ export default {
                     </div>
                     <div class="greeting">
                         <h4 class="text-light ">Hello, {{ username }}</h4>
-                        <h3 class="text-light ">Find a Doctor and see your</h3>
-                        <h4 class="text-light ">appointments Online!</h4>
+                        <h3 class="text-light ">This is "Harmony Hospital"</h3>
+                        <h4 class="text-light ">Management System</h4>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@ export default {
     <section>
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse navbar navbar-light">
             <div class="center_alignment">
-                <img src="/images/notepad_2.png" alt="Notepad">
+                <img src="/images/computer_7467135.png" alt="Notepad"  style="width: 200px">
             </div>
 
             <div class="position-sticky">
@@ -84,14 +84,17 @@ export default {
                     </label>
                 </div>
             </div>
-
+            
+            <div class="botton_sidebar">
+                <img src="/images/medical_personnel.png" alt="Personnel" class="sidebar_img">
+            </div>
         </nav>
   
         <article>
             <dashboard v-if="activePage === 'Dashboard'"></dashboard>
-            <hospital-info v-if="activePage === 'HospitalInfo'"></hospital-info>
             <statistics v-if="activePage === 'Statistics'"></statistics>
             <emergency-info v-if="activePage === 'EmergencyInfo'"></emergency-info>
+            <hospital-info v-if="activePage === 'HospitalInfo'"></hospital-info>
         </article>
     </section>
 

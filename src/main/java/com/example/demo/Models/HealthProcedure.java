@@ -11,28 +11,28 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "health_procedure")
-public class HeathProcedure {
+public class HealthProcedure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer procedureId;
 
     private String description;
-    private Double price;
+    private Integer price;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cabinet_id", insertable = false, updatable = false)
+    @JoinColumn(name = "cabinetId")
     private Cabinet cabinet;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private Doctor doctor;
 
-    public HeathProcedure() {
+    public HealthProcedure() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public HeathProcedure(String description, Double price, Cabinet cabinet, Doctor doctor) {
+    public HealthProcedure(String description, Cabinet cabinet, Integer price, Doctor doctor) {
         this.description = description;
         this.price = price;
         this.cabinet = cabinet;
@@ -55,11 +55,11 @@ public class HeathProcedure {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

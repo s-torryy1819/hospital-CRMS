@@ -20,14 +20,14 @@ public class Medicine {
     private String nameOfMedicine;
     private String description;
     private Integer availableInStock;
-    private Double price;
+    private Integer price;
     private Boolean needReceipt;
 
     public Medicine() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Medicine(String nameOfMedicine, String description, Integer availableInStock, Double price,
+    public Medicine(String nameOfMedicine, String description, Integer availableInStock, Integer price,
             Boolean needReceipt) {
         this.nameOfMedicine = nameOfMedicine;
         this.description = description;
@@ -37,7 +37,7 @@ public class Medicine {
     }
 
     public Medicine(Integer medicineId, String nameOfMedicine, String description, Integer availableInStock,
-            Double price, Boolean needReceipt) {
+            Integer price, Boolean needReceipt) {
         this.medicineId = medicineId;
         this.nameOfMedicine = nameOfMedicine;
         this.description = description;
@@ -87,11 +87,11 @@ public class Medicine {
         this.availableInStock = availableInStock;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

@@ -95,7 +95,6 @@ a.button:active {
 .turn_items {
     display: flex;
     justify-content: space-around;
-    align-items: center;
 }
 
 .appointment_header {
@@ -201,4 +200,28 @@ a.button:active {
     font-size: medium;
 }
 
-.carousel_item {}
+.table_img {
+    width: 300px;
+}
+
+.appointments_container {
+    width: 70vw;
+}
+
+.sidebar_img {
+    width: 400px;
+}
+
+.botton_sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.personnel_container {
+    height: 70vh;
+    top: 0;
+}
