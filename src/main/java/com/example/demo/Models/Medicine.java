@@ -36,16 +36,6 @@ public class Medicine {
         this.needReceipt = needReceipt;
     }
 
-    public Medicine(Integer medicineId, String nameOfMedicine, String description, Integer availableInStock,
-            Integer price, Boolean needReceipt) {
-        this.medicineId = medicineId;
-        this.nameOfMedicine = nameOfMedicine;
-        this.description = description;
-        this.availableInStock = availableInStock;
-        this.price = price;
-        this.needReceipt = needReceipt;
-    }
-
     public Boolean addToStock(Integer quantityToAdd) throws MedicineException {
         if (quantityToAdd < 0) {
             throw new MedicineException("Quantity of medicine should be greater than 0. Please check your input data.",

@@ -1,7 +1,9 @@
 package com.example.demo.Controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,19 +51,43 @@ public class DataController {
     @Autowired
     private SecurityUserDetailsService userDetailsManager;
 
-    // @PostMapping(path = "/add")
-    // public @ResponseBody String addNewUser(@RequestParam String
-    // name, @RequestParam String password) {
+    @PostMapping(path = "/addNewAdmin")
+    public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
 
-    // User n = new User();
-    // n.setUsername(name);
-    // n.setPassword(password);
-    // userRepository.save(n);
-    // return "Saved";
-    // }
+        User n = new User();
+        n.setUsername(username);
+        n.setPassword(password);
+        userRepository.save(n);
+        return "Saved";
+    }
+
+    @PostMapping(path = "/addNewDoctor")
+    public String addNewDoctor(@RequestParam String username, @RequestParam String password,
+            @RequestParam String name, @RequestParam String surname, @RequestParam String yearOfBirth,
+            @RequestParam String address, @RequestParam String phone, @RequestParam String speciality,
+            @RequestParam String pricePerVisit, @RequestParam String childDoctor) {
+
+        userDetailsManager.createUser(username, password,
+                Arrays.asList(Authorities.DOCTOR),
+                new Doctor(name, surname, yearOfBirth, address, phone, speciality, Boolean.valueOf(childDoctor),
+                        pricePerVisit));
+        return "Saved";
+    }
+
+    @PostMapping(path = "/addNewPatient")
+    public String addNewPatient(@RequestParam String username, @RequestParam String password,
+            @RequestParam String name, @RequestParam String surname, @RequestParam String yearOfBirth,
+            @RequestParam String address, @RequestParam String phone, @RequestParam String workAddress,
+            @RequestParam String disability, @RequestParam String chronicDiseases) {
+        userDetailsManager.createUser(username, password,
+                Arrays.asList(Authorities.PATIENT),
+                new Patient(name, surname, yearOfBirth, address, phone,
+                        workAddress, Boolean.valueOf(disability), chronicDiseases));
+        return "Saved";
+    }
 
     @PostMapping(path = "/addAppointment")
-    public @ResponseBody String addAppointment(@RequestParam Doctor doctor,
+    public String addAppointment(@RequestParam Doctor doctor,
             @RequestParam Patient patient,
             @RequestParam Cabinet cabinet, @RequestParam LocalDate date) {
 
@@ -72,41 +98,50 @@ public class DataController {
     }
 
     @PostMapping(path = "/addCabinet")
-    public @ResponseBody String addCabinet(@RequestParam String description, @RequestParam Doctor doctor) {
+    public String addCabinet(@RequestParam String description, @RequestParam String doctorId) {
 
-        Cabinet a = new Cabinet(description, doctor);
+        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
+                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
+                .findFirst().get();
+        Cabinet a = new Cabinet(description, selectedDoc);
 
         cabinetRepository.save(a);
         return "Added";
     }
 
     @PostMapping(path = "/addMedicine")
-    public @ResponseBody String addMedicine(@RequestParam String nameOfMedicine, @RequestParam String description,
+    public String addMedicine(@RequestParam String nameOfMedicine, @RequestParam String description,
+            @RequestParam String availableInStock, @RequestParam String price,
+            @RequestParam String needReceipt) {
 
-            @RequestParam Integer availableInStock, @RequestParam Integer price,
-
-            @RequestParam Boolean needReceipt) {
-
-        Medicine a = new Medicine(nameOfMedicine, description, availableInStock, price,
-                needReceipt);
+        Medicine a = new Medicine(nameOfMedicine, description, Integer.valueOf(availableInStock),
+                Integer.valueOf(price),
+                Boolean.valueOf(needReceipt));
 
         medicineRepository.save(a);
         return "Added";
     }
 
     @PostMapping(path = "/addProcedure")
-    public @ResponseBody String addProcedure(@RequestParam String description, @RequestParam Integer price,
+    public String addProcedure(@RequestParam String description, @RequestParam Integer price,
+            @RequestParam String cabinetId, @RequestParam String doctorId) {
 
-            @RequestParam Cabinet cabinet, @RequestParam Doctor doctor) {
+        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
+                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
+                .findFirst().get();
 
-        HealthProcedure a = new HealthProcedure(description, cabinet, price, doctor);
+        Cabinet selectedCab = getAllCabinets().stream()
+                .filter(cab -> cab.getCabinetId().equals(Integer.valueOf(cabinetId)))
+                .findFirst().get();
+
+        HealthProcedure a = new HealthProcedure(description, selectedCab, price, selectedDoc);
 
         procedureRepository.save(a);
         return "Added";
     }
 
     @PostMapping(path = "/addVisit")
-    public @ResponseBody String addVisit(@RequestParam Patient patient, @RequestParam LocalDate date,
+    public String addVisit(@RequestParam Patient patient, @RequestParam LocalDate date,
 
             @RequestParam String disease, @RequestParam String purpose,
 
@@ -135,6 +170,17 @@ public class DataController {
         List<User> newList = new ArrayList<>();
         for (User user : list) {
             if (user.getAuths().contains(Authorities.DOCTOR) || user.getAuths().contains(Authorities.ADMIN))
+                newList.add(user);
+        }
+        return newList;
+    }
+
+    @GetMapping(path = "/getAllDoctors")
+    public List<User> getAllDoctors() {
+        List<User> list = userRepository.findAll();
+        List<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getAuths().contains(Authorities.DOCTOR))
                 newList.add(user);
         }
         return newList;

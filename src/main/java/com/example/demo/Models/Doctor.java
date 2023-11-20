@@ -1,8 +1,10 @@
 package com.example.demo.Models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
@@ -10,6 +12,7 @@ import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Exceptions.DoctorExceptionReason;
 import com.example.demo.Security.Models.User;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -21,12 +24,12 @@ public class Doctor extends User {
 
     private String name;
     private String surname;
-    private Integer yearOfBirth;
+    private String yearOfBirth;
     private String address;
     private String phone;
     private String speciality;
     private Boolean childDoctor;
-    private Integer pricePerVisit;
+    private String pricePerVisit;
 
     @OneToMany(mappedBy = "Doctor")
     List<Cabinet> cabinets = new ArrayList<>();
@@ -34,17 +37,17 @@ public class Doctor extends User {
     List<DoctorAppointment> appointments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Date> availableTime;
+    private List<LocalDate> availableTime;
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Date> blockedTime;
+    private List<LocalDate> blockedTime;
 
     public Doctor() {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Doctor(String name, String surname, Integer yearOfBirth, String address, String phone,
-            String speciality, Boolean childDoctor, Integer pricePerVisit, List<Date> availableTime,
-            List<Date> blockedTime) {
+    public Doctor(String name, String surname, String yearOfBirth, String address, String phone,
+            String speciality, Boolean childDoctor, String pricePerVisit, List<LocalDate> availableTime,
+            List<LocalDate> blockedTime) {
         this.name = name;
         this.surname = surname;
         this.yearOfBirth = yearOfBirth;
@@ -57,7 +60,29 @@ public class Doctor extends User {
         this.blockedTime = blockedTime;
     }
 
-    public boolean setNewAppointmentDate(Date date) throws DoctorException {
+    public Doctor(String name, String surname, String yearOfBirth, String address, String phone,
+            String speciality, Boolean childDoctor, String pricePerVisit) {
+        this.name = name;
+        this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.speciality = speciality;
+        this.childDoctor = childDoctor;
+        this.pricePerVisit = pricePerVisit;
+        this.availableTime = getAvailableTimeForNewDoc();
+        this.blockedTime = Collections.EMPTY_LIST;
+    }
+
+    public List<LocalDate> getAvailableTimeForNewDoc() {
+        List<LocalDate> list = new ArrayList<>();
+        for (int i = 1; i < 91; i++) {
+            list.add(LocalDate.now().plusDays(i));
+        }
+        return list;
+    }
+
+    public boolean setNewAppointmentDate(LocalDate date) throws DoctorException {
         if (!availableTime.contains(date))
             throw new DoctorException("Unfortunatelly this date is already blocked, please choose another one.",
                     DoctorExceptionReason.DATE_ALREADY_BLOCKED);
@@ -67,7 +92,7 @@ public class Doctor extends User {
         return true;
     }
 
-    public boolean deleteAppointmentDate(Date date) throws DoctorException {
+    public boolean deleteAppointmentDate(LocalDate date) throws DoctorException {
         if (!blockedTime.contains(date))
             throw new DoctorException(
                     "This Date has never been blocked, you can not delete an Appointment with a non-existing Date. Please check information one more time.",
@@ -78,7 +103,7 @@ public class Doctor extends User {
         return true;
     }
 
-    public boolean addNewAvailableDate(Date date) throws DoctorException {
+    public boolean addNewAvailableDate(LocalDate date) throws DoctorException {
         if (availableTime.contains(date))
             throw new DoctorException("This Date has already been added to Available Time",
                     DoctorExceptionReason.DATE_IS_ALREADY_AVAILABLE);
@@ -107,11 +132,11 @@ public class Doctor extends User {
         this.surname = surname;
     }
 
-    public Integer getYearOfBirth() {
+    public String getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(Integer yearOfBirth) {
+    public void setYearOfBirth(String yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
@@ -147,27 +172,27 @@ public class Doctor extends User {
         this.childDoctor = childDoctor;
     }
 
-    public Integer getPricePerVisit() {
+    public String getPricePerVisit() {
         return pricePerVisit;
     }
 
-    public void setPricePerVisit(Integer pricePerVisit) {
+    public void setPricePerVisit(String pricePerVisit) {
         this.pricePerVisit = pricePerVisit;
     }
 
-    public List<Date> getAvailableTime() {
+    public List<LocalDate> getAvailableTime() {
         return availableTime;
     }
 
-    public void setAvailableTime(List<Date> availableTime) {
+    public void setAvailableTime(List<LocalDate> availableTime) {
         this.availableTime = availableTime;
     }
 
-    public List<Date> getBlockedTime() {
+    public List<LocalDate> getBlockedTime() {
         return blockedTime;
     }
 
-    public void setBlockedTime(List<Date> blockedTime) {
+    public void setBlockedTime(List<LocalDate> blockedTime) {
         this.blockedTime = blockedTime;
     }
 

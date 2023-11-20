@@ -27,7 +27,7 @@ export default {
 
       </div>
 
-      <table class="table">
+      <table class="table table-bordered table-hover">
   <thead>
     <tr class="bg-success text-white">
       <th scope="col">Doctor ID</th>
@@ -45,17 +45,27 @@ export default {
   </thead>
   <tbody>
     <tr v-for="user in allUsers">
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.userId }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.name }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.surname }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.yearOfBirth }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.address }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.phone }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.speciality }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.childDoctor }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.pricePerVisit }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.availableTime }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'DOCTOR'">{{ user.blockedTime }}</th>
+      <template v-if="user?.authorities[0].authority === 'DOCTOR'">
+        <th scope="row">{{ user.userId }}</th>
+        <th scope="row">{{ user.name }}</th>
+        <th scope="row">{{ user.surname }}</th>
+        <th scope="row">{{ user.yearOfBirth }}</th>
+        <th scope="row">{{ user.address }}</th>
+        <th scope="row">{{ user.phone }}</th>
+        <th scope="row">{{ user.speciality }}</th>
+        <th scope="row">{{ user.childDoctor }}</th>
+        <th scope="row">{{ user.pricePerVisit }}</th>
+        <th scope="row">
+          <ul>
+            <li v-for="time in user.availableTime">{{time}}</li>
+          </ul>
+        </th>
+        <th scope="row">
+          <ul>
+            <li v-for="time in user.blockedTime">{{time}}</li>
+          </ul>
+        </th>
+      </template>
     </tr>
   </tbody>
 </table>

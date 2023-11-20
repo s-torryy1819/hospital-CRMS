@@ -13,7 +13,7 @@ public class Patient extends User {
 
     private String name;
     private String surname;
-    private Integer yearOfBirth;
+    private String yearOfBirth;
     private String address;
     private String phone;
     private String workAddress;
@@ -28,7 +28,7 @@ public class Patient extends User {
         // FOR SPRING | DO NOT DELETE
     }
 
-    public Patient(String name, String surname, Integer yearOfBirth, String address, String phone, String workAddress,
+    public Patient(String name, String surname, String yearOfBirth, String address, String phone, String workAddress,
             Boolean disability, String chronicDiseases, Integer visitHistoryId) {
         this.name = name;
         this.surname = surname;
@@ -39,6 +39,18 @@ public class Patient extends User {
         this.disability = disability;
         this.chronicDiseases = chronicDiseases;
         this.visitHistoryId = visitHistoryId;
+    }
+
+    public Patient(String name, String surname, String yearOfBirth, String address, String phone, String workAddress,
+            Boolean disability, String chronicDiseases) {
+        this.name = name;
+        this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.workAddress = workAddress;
+        this.disability = disability;
+        this.chronicDiseases = chronicDiseases;
     }
 
     public String getName() {
@@ -57,11 +69,11 @@ public class Patient extends User {
         this.surname = surname;
     }
 
-    public Integer getYearOfBirth() {
+    public String getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(Integer yearOfBirth) {
+    public void setYearOfBirth(String yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 

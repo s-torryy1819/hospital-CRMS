@@ -19,12 +19,12 @@ export default {
     this.getAllMedicines();
   },
   template: `
-      <br/>
+      <br/><br/>
       <div class="turn_items appointments_container">
       <div>
       <img src="/images/personal.png" alt="Calendar" style="width: 20vw;">
     </div>
-      <table class="table">
+      <table class="table table-bordered table-hover">
       <thead>
         <tr class="bg-warning text-white">
           <th scope="col">Medicine ID</th>

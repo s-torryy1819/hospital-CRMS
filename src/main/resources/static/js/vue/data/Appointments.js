@@ -25,8 +25,8 @@ export default {
             <img src="/images/output-onlinepngtools (2).png" alt="Doctors"  style="width: 40vw;">
           </div>
 
-      </div>
-      <table class="table">
+      </div><br/>
+      <table class="table table-bordered table-hover">
       <thead>
         <tr class="bg-success text-white">
           <th scope="col">Appointment ID</th>

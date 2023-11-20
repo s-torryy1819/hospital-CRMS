@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             username: {},
-            allPages: ["Dashboard", "Statistics", "EmergencyInfo", "HospitalInfo"],
+            allPages: ["Dashboard", "Statistics", "Emergency Info", "Hospital Info"],
             activePage: "Dashboard",
         };
     },
@@ -93,8 +93,8 @@ export default {
         <article>
             <dashboard v-if="activePage === 'Dashboard'"></dashboard>
             <statistics v-if="activePage === 'Statistics'"></statistics>
-            <emergency-info v-if="activePage === 'EmergencyInfo'"></emergency-info>
-            <hospital-info v-if="activePage === 'HospitalInfo'"></hospital-info>
+            <emergency-info v-if="activePage === 'Emergency Info'"></emergency-info>
+            <hospital-info v-if="activePage === 'Hospital Info'"></hospital-info>
         </article>
     </section>
 

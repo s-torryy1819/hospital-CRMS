@@ -19,9 +19,9 @@ export default {
     this.getAllUsers();
   },
   template: `
-      <br/>
+      <br/><br/>
       <div class="turn_items appointments_container">
-      <table class="table">
+      <table class="table table-bordered table-hover">
   <thead>
     <tr class="bg-success text-white">
       <th scope="col">Patient ID</th>
@@ -30,10 +30,10 @@ export default {
       <th scope="col">Year of Birth</th>
       <th scope="col">Address</th>
       <th scope="col">Phone</th>
-      <th scope="col">WorkAddress</th>
+      <th scope="col">Work Address</th>
       <th scope="col">Disability</th>
       <th scope="col">Visit History Id</th>
-      <th scope="col">ChronicDiseases</th>
+      <th scope="col">Chronic Diseases</th>
     </tr>
   </thead>
   <tbody>

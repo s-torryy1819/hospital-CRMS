@@ -1,51 +1,72 @@
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
-
 export default {
   components: {
     axios
   },
   data() {
     return {
-      allAppointments: {},
+      allDoctors: {},
+      allPatients: {},
+      allCabinets: {},
+      selectedDoc: null,
+      cabinetsForSelectedDoc: null,
+      onChange(e) {
+        this.selectedDoc = e.target.value;
+
+        if (this.selectedDoc !== null) {
+          this.allCabinets.forEach(cabinet => {
+            if (cabinet.doctor.userId == this.selectedDoc) {
+              this.cabinetsForSelectedDoc = JSON.parse(JSON.stringify(cabinet));
+              console.log(this.cabinetsForSelectedDoc);
+            }
+          });
+        }
+      },
+
     };
   },
   methods: {
-    async getAllAppointments() {
-      const response = await axios.get("http://localhost:8080/getAllAppointments");
-      this.allAppointments = response.data;
+    async getAllInfo() {
+      const response = await axios.get("http://localhost:8080/getAllDoctors");
+      this.allDoctors = response.data;
+      const response1 = await axios.get("http://localhost:8080/getAllPatients");
+      this.allPatients = response1.data;
+      const response2 = await axios.get("http://localhost:8080/getAllCabinets");
+      this.allCabinets = response2.data;
+
+
     },
   },
   beforeMount() {
-    this.getAllAppointments();
+    this.getAllInfo();
   },
   template: `
-      <div class="turn_items appointment_header">
-          <div>
-            <img src="/images/output-onlinepngtools (2).png" alt="Doctors"  style="width: 40vw;">
-          </div>
+    <br/>
+    <br/>
+    <form>
+<div class="form-group">
+  <label for="descriptionInput">Cabinet Description</label>
+  <input type="text" class="form-control" id="descriptionInput" aria-describedby="name" placeholder="Description">
+</div>
 
-      </div>
-      <table class="table">
-      <thead>
-        <tr class="bg-success text-white">
-          <th scope="col">Appointment ID</th>
-          <th scope="col">Doctor</th>
-          <th scope="col">Patient</th>
-          <th scope="col">Cabinet</th>
-          <th scope="col">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="appointment in allAppointments">
-          <th scope="row">{{ appointment.doctorAppointmentId }}</th>
-          <td>{{ appointment.doctor.name }} {{ appointment.doctor.surname }} <b>{{ appointment.doctor.speciality }}<b/></td>
-          <td>{{ appointment.patient.name }} {{ appointment.patient.surname }}</td>
-          <td><b>{{ appointment.cabinet.cabinetId }}<b/> {{ appointment.cabinet.description }}</td>
-          <td>{{ appointment.date }}</td>
-        </tr>
-      </tbody>
-    </table>
+<label for="docSelection">Select a Doctor: </label><br/>
+<select class="form-select" aria-label="Default select example" @change="onChange($event)" id="docSelection">
+  <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+</select><br/>
+
+<label for="patSelection">Select a Patient: </label><br/>
+<select class="form-select" aria-label="Default select example" id="patSelection">
+  <option v-for="patient in allPatients" value={{patient.userId}}>{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
+</select><br/>
+
+<label for="cabSelection" v-if="selectedDoc">Select a Cabinet: </label><br/>
+<select class="form-select" aria-label="Default select example" v-if="selectedDoc" id="cabSelection">
+  <option v-for="cabinet in cabinetsForSelectedDoc" value={{cabinet.cabinetId}}>{{cabinet.cabinetId}} {{cabinet.description}}</option>
+</select><br/>
+
+<button type="submit" class="btn btn-success">Add a Cabinet</button>
+</form>
       
       `,
 };

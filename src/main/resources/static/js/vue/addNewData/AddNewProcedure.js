@@ -1,0 +1,77 @@
+import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
+
+export default {
+    components: {
+        axios
+    },
+    data() {
+        return {
+            allDoctors: {},
+            allCabinets: {},
+            cabId: null,
+            description: null,
+            doctorId: null,
+            price: null,
+            // onChange(e) {
+            //     this.cabId = e.target.value;
+            // },
+        };
+    },
+    computed: {
+        allCabinetsForCurrentDoc() {
+            return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId)
+        }
+    },
+    methods: {
+        async getAllDoctors() {
+            const response = await axios.get("http://localhost:8080/getAllDoctors");
+            this.allDoctors = response.data;
+            const response2 = await axios.get("http://localhost:8080/getAllCabinets");
+            this.allCabinets = response2.data;
+        },
+        addProcedure() {
+
+            axios.post(`/addProcedure`, null, {
+                params: {
+                    description: this.description,
+                    price: this.price,
+                    cabinetId: this.cabId,
+                    doctorId: this.doctorId
+                }
+            })
+                .then(response => response.status)
+                .catch(err => console.warn(err));
+        }
+    },
+    beforeMount() {
+        this.getAllDoctors();
+    },
+    template: `
+      <br/>
+      <br/>
+      <form>
+  <div class="form-group">
+    <label for="descInput">Description</label>
+    <input type="text" v-model="description" class="form-control" id="descInput" aria-describedby="name" placeholder="Enter description">
+  </div>
+  <div class="form-group">
+    <label for="amountInput">Price</label>
+    <input type="text" v-model="price" class="form-control" id="amountInput" placeholder="Price">
+  </div>
+
+  <label for="doctorSelection">Select a Doctor: </label><br/>
+  <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="doctorId">
+        <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+   </select><br/><br/>
+
+<label for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
+<h1>Egon : {{cabId}}</h1>
+<select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabId">
+      <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
+</select><br/>
+
+<button type="submit" class="btn btn-success" @click="addProcedure()">Add a Procedure</button>
+</form>
+      
+      `,
+};

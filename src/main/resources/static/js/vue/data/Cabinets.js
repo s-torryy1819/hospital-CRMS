@@ -19,11 +19,12 @@ export default {
     this.getAllCabinets();
   },
   template: `
+  <br/><br/>
       <div class="turn_items appointments_container">
       <div class="personnel_container">
       <img src="/images/cabinet.png" alt="Calendar" style="width: 30vw;">
     </div>
-      <table class="table">
+      <table class="table table-bordered table-hover">
       <thead>
         <tr class="bg-warning text-white">
           <th scope="col">Cabinet ID</th>
