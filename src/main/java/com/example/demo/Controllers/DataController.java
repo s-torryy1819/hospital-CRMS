@@ -1,7 +1,6 @@
 package com.example.demo.Controllers;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,9 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Models.Cabinet;
 import com.example.demo.Models.Doctor;
 import com.example.demo.Models.DoctorAppointment;
@@ -87,11 +86,23 @@ public class DataController {
     }
 
     @PostMapping(path = "/addAppointment")
-    public String addAppointment(@RequestParam Doctor doctor,
-            @RequestParam Patient patient,
-            @RequestParam Cabinet cabinet, @RequestParam LocalDate date) {
+    public String addAppointment(@RequestParam String date,
+            @RequestParam String patientId, @RequestParam String cabinetId,
+            @RequestParam String doctorId) throws DoctorException {
 
-        DoctorAppointment a = new DoctorAppointment(doctor, patient, cabinet, date);
+        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
+                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
+                .findFirst().get();
+        Cabinet selectedCab = getAllCabinets().stream()
+                .filter(cab -> cab.getCabinetId().equals(Integer.valueOf(cabinetId)))
+                .findFirst().get();
+        Patient selectedPat = (Patient) getAllPatients().stream()
+                .filter(cab -> cab.getUserId().equals(Long.valueOf(patientId)))
+                .findFirst().get();
+
+        selectedDoc.setNewAppointmentDate(LocalDate.parse(date));
+
+        DoctorAppointment a = new DoctorAppointment(selectedDoc, selectedPat, selectedCab, LocalDate.parse(date));
 
         appointmentRepository.save(a);
         return "Added";

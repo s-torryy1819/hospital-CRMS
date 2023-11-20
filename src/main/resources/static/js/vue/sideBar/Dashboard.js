@@ -2,6 +2,7 @@ import Appointments from "../data/Appointments.js";
 import Patients from "../data/Patients.js";
 import Pharmasy from "../data/Pharmasy.js";
 import Procedures from "../data/Procedures.js";
+import Visits from "../data/Visits.js";
 import Doctors from "../data/Doctors.js";
 import Cabinets from "../data/Cabinets.js";
 import AddNewCabinet from "../addNewData/AddNewCabinet.js";
@@ -17,6 +18,7 @@ export default {
     Patients,
     Pharmasy,
     Procedures,
+    Visits,
     Doctors,
     Cabinets,
     AddNewCabinet,
@@ -33,6 +35,7 @@ export default {
         "Patients",
         "Pharmasy",
         "Procedures",
+        "Visits",
         "Doctors",
         "Cabinets",
         "Add New Cabinet",
@@ -59,6 +62,7 @@ export default {
     <patients v-if="activePage === 'Patients'"></patients>
     <pharmasy v-if="activePage === 'Pharmasy'"></pharmasy>
     <procedures v-if="activePage === 'Procedures'"></procedures>
+    <visits v-if="activePage === 'Visits'"></visits>
     <doctors v-if="activePage === 'Doctors'"></doctors>
     <cabinets v-if="activePage === 'Cabinets'"></cabinets>
     <add-new-cabinet v-if="activePage === 'Add New Cabinet'"></add-new-cabinet>

@@ -40,11 +40,11 @@ export default {
     <br/>
     <form>
       <div class="form-group">
-        <label for="descriptionInput">Cabinet Description:</label>
+        <label class="bg-warning text-white label_wrapper" for="descriptionInput">Cabinet Description:</label>
         <input type="text" v-model="desc" class="form-control" id="descriptionInput" aria-describedby="name" placeholder="Description">
       </div>
 
-      <label for="doctorSelection">Select a Doctor: </label><br/>
+      <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
       <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="selectedDocId">
         <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
       </select><br/><br/>

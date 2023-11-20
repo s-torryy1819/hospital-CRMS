@@ -23,7 +23,7 @@ export default {
         }
     },
     methods: {
-        async getAllDoctors() {
+        async getAllInfo() {
             const response = await axios.get("http://localhost:8080/getAllDoctors");
             this.allDoctors = response.data;
             const response2 = await axios.get("http://localhost:8080/getAllCabinets");
@@ -44,7 +44,7 @@ export default {
         }
     },
     beforeMount() {
-        this.getAllDoctors();
+        this.getAllInfo();
     },
     template: `
       <br/>
@@ -65,7 +65,6 @@ export default {
    </select><br/><br/>
 
 <label for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
-<h1>Egon : {{cabId}}</h1>
 <select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabId">
       <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
 </select><br/>

@@ -9,7 +9,10 @@ export default {
       allDoctors: {},
       allPatients: {},
       allCabinets: {},
-      selectedDoc: null,
+      availableTime: {},
+      cabId: null,
+      doctorId: null,
+      patientId: null,
       cabinetsForSelectedDoc: null,
       onChange(e) {
         this.selectedDoc = e.target.value;
@@ -26,6 +29,13 @@ export default {
 
     };
   },
+  computed: {
+    allCabinetsForCurrentDoc() {
+      this.availableTime = this.allDoctors?.filter(doc => doc.userId === this.doctorId)[0].availableTime;
+
+      return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId);
+    }
+  },
   methods: {
     async getAllInfo() {
       const response = await axios.get("http://localhost:8080/getAllDoctors");
@@ -34,9 +44,20 @@ export default {
       this.allPatients = response1.data;
       const response2 = await axios.get("http://localhost:8080/getAllCabinets");
       this.allCabinets = response2.data;
-
-
     },
+
+    addAppointment() {
+      axios.post(`/addAppointment`, null, {
+        params: {
+          date: this.date,
+          patientId: this.patientId,
+          cabinetId: this.cabinetId,
+          doctorId: this.doctorId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+    }
   },
   beforeMount() {
     this.getAllInfo();
@@ -45,27 +66,28 @@ export default {
     <br/>
     <br/>
     <form>
-<div class="form-group">
-  <label for="descriptionInput">Cabinet Description</label>
-  <input type="text" class="form-control" id="descriptionInput" aria-describedby="name" placeholder="Description">
-</div>
 
-<label for="docSelection">Select a Doctor: </label><br/>
-<select class="form-select" aria-label="Default select example" @change="onChange($event)" id="docSelection">
-  <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
-</select><br/>
+<label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
+<select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="doctorId">
+      <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+</select><br/><br/>
 
-<label for="patSelection">Select a Patient: </label><br/>
-<select class="form-select" aria-label="Default select example" id="patSelection">
-  <option v-for="patient in allPatients" value={{patient.userId}}>{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
-</select><br/>
+<label class="bg-warning text-white label_wrapper" for="patSelection">Select a Patient: </label><br/>
+<select class="form-select" aria-label="Default select example" id="patSelection" v-model="patientId">
+  <option v-for="patient in allPatients" :value="patient.userId">{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
+</select><br/><br/>
 
-<label for="cabSelection" v-if="selectedDoc">Select a Cabinet: </label><br/>
-<select class="form-select" aria-label="Default select example" v-if="selectedDoc" id="cabSelection">
-  <option v-for="cabinet in cabinetsForSelectedDoc" value={{cabinet.cabinetId}}>{{cabinet.cabinetId}} {{cabinet.description}}</option>
-</select><br/>
+<label class="bg-warning text-white label_wrapper" for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
+<select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabinetId">
+      <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
+</select><br/><br/>
 
-<button type="submit" class="btn btn-success">Add a Cabinet</button>
+<label class="bg-warning text-white label_wrapper" for="dateSelection" v-if="doctorId">Choose a date from available ones :</label><br/>
+<select class="form-select" aria-label="Default select example" id="dateSelection" v-model="date">
+  <option v-for="time in availableTime" :value="time"> {{time}} </option>
+</select><br/><br/>
+
+<button type="submit" class="btn btn-success" @click="addAppointment()">Add an Appointment</button>
 </form>
       
       `,

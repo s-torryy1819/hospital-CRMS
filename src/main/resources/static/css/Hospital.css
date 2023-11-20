@@ -100,11 +100,21 @@ a.button:active {
 .appointment_header {
     width: 70vw;
     margin-top: 20px;
-
 }
 
 .radius_wrapper {
     border-radius: 30px;
+}
+
+.label_wrapper {
+    border-radius: 10px;
+    width: max-content;
+    padding-left: 0.8vw;
+    padding-right: 0.8vw;
+    padding-top: 0.4vw;
+    padding-bottom: 0.4vw;
+    text-align: center;
+    font-size: large;
 }
 
 .text_wrapper {
