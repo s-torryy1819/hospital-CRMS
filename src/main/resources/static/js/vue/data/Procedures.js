@@ -39,7 +39,7 @@ export default {
         <tr v-for="procedure in allProcedures">
           <th scope="row">{{ procedure.procedureId }}</th>
           <td><b>{{ procedure.description }}<b/></td>
-          <td>{{ procedure.price }}</td>
+          <td>{{ procedure.price }} ua hrv</td>
           <td>{{ procedure.cabinet.cabinetId }} {{ procedure.cabinet.description }}</td>
           <td><b>{{ procedure.doctor.speciality }}<b/> {{ procedure.doctor.name }} {{ procedure.doctor.surname }}</td>
         </tr>

@@ -51,7 +51,7 @@ export default {
   methods: {},
   template: `
     <br/>
-    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display : flex; flex-wrap: wrap;">
+    <div class="btn-group btn-group-toggle dashboard_buttons" data-toggle="buttons" style="display : flex; flex-wrap: wrap;">
         <label class="btn btn-info" :class="activePage === page ? 'active' : ''" v-for="page in allPages" @click="activePage = page">
             <input type="radio" name="allPages" :id="page" />
             {{page}}

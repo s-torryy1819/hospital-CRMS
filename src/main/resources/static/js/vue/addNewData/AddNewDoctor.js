@@ -75,8 +75,8 @@ export default {
     <label class="bg-warning text-white label_wrapper" for="specialityInput">Speciality</label>
     <input type="text" v-model="speciality" class="form-control" id="specialityInput" placeholder="Speciality">
   </div>
-  <div class="form-check">
-    <input type="checkbox" v-model="childDoctor" class="form-check-input" id="childDoc">
+  <div class="checkbox-wrapper-1">
+    <input type="checkbox" v-model="childDoctor" class="substituted" id="childDoc">
     <label class="bg-warning text-white label_wrapper" class="form-check-label" for="childDoc">Child Doctor</label>
   </div><br/>
   <div class="form-group">

@@ -51,23 +51,25 @@ export default {
       <br/>
       <form>
   <div class="form-group">
-    <label for="descInput">Description</label>
+    <label class="bg-warning text-white label_wrapper" for="descInput">Description</label>
     <input type="text" v-model="description" class="form-control" id="descInput" aria-describedby="name" placeholder="Enter description">
   </div>
   <div class="form-group">
-    <label for="amountInput">Price</label>
+    <label class="bg-warning text-white label_wrapper" for="amountInput">Price</label>
     <input type="text" v-model="price" class="form-control" id="amountInput" placeholder="Price">
   </div>
 
-  <label for="doctorSelection">Select a Doctor: </label><br/>
+  <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
   <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="doctorId">
         <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
    </select><br/><br/>
 
-<label for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
+<div class="selection" v-if="doctorId">
+<label class="bg-warning text-white label_wrapper" for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
 <select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabId">
       <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
 </select><br/>
+</div><br/>
 
 <button type="submit" class="btn btn-success" @click="addProcedure()">Add a Procedure</button>
 </form>

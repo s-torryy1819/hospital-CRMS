@@ -31,9 +31,11 @@ export default {
   },
   computed: {
     allCabinetsForCurrentDoc() {
-      this.availableTime = this.allDoctors?.filter(doc => doc.userId === this.doctorId)[0].availableTime;
+      if (this.doctorId) {
+        this.availableTime = this.allDoctors?.filter(doc => doc.userId === this.doctorId)[0].availableTime;
 
-      return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId);
+        return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId);
+      }
     }
   },
   methods: {
@@ -77,15 +79,19 @@ export default {
   <option v-for="patient in allPatients" :value="patient.userId">{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
 </select><br/><br/>
 
-<label class="bg-warning text-white label_wrapper" for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
-<select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabinetId">
+<div class="selection" v-if="doctorId">
+<label class="bg-warning text-white label_wrapper" for="cabinetSelection">Select a Cabinet: </label><br/>
+<select class="form-select" aria-label="Default select example" id="cabinetSelection" v-model="cabinetId">
       <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
 </select><br/><br/>
+</div>
 
-<label class="bg-warning text-white label_wrapper" for="dateSelection" v-if="doctorId">Choose a date from available ones :</label><br/>
-<select class="form-select" aria-label="Default select example" id="dateSelection" v-model="date">
+<div class="selection" v-if="doctorId">
+<label class="bg-warning text-white label_wrapper" for="dateSelection">Choose a date from available ones :</label><br/>
+<select class="form-select" aria-label="Default select example" id="dateSelection selection" v-model="date">
   <option v-for="time in availableTime" :value="time"> {{time}} </option>
 </select><br/><br/>
+</div>
 
 <button type="submit" class="btn btn-success" @click="addAppointment()">Add an Appointment</button>
 </form>

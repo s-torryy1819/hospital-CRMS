@@ -54,7 +54,7 @@ export default {
         <th scope="row">{{ user.phone }}</th>
         <th scope="row">{{ user.speciality }}</th>
         <th scope="row">{{ user.childDoctor }}</th>
-        <th scope="row">{{ user.pricePerVisit }}</th>
+        <th scope="row">{{ user.pricePerVisit }} ua hrv</th>
         <th scope="row">
           <ul>
             <li v-for="time in user.availableTime">{{time}}</li>

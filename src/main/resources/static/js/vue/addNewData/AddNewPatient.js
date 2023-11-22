@@ -76,8 +76,8 @@ export default {
     <label class="bg-warning text-white label_wrapper" for="workAddressInput">Work Address</label>
     <input type="text" v-model="workAddress" class="form-control" id="workAddressInput" placeholder="Work Address">
   </div>
-  <div class="form-check">
-    <input type="checkbox" v-model="disability" class="form-check-input" id="disability">
+  <div class="checkbox-wrapper-1">
+    <input type="checkbox" v-model="disability" class="substituted" id="disability">
     <label class="bg-warning text-white label_wrapper" class="form-check-label" for="disability">Disability</label>
   </div><br/>
   <div class="form-group">

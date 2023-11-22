@@ -40,7 +40,7 @@ export default {
                 <img src="/images/patient_3359120 (2).png" alt="Patients">
               </div><br/>
               <div class="carousel_item text-center">
-                <h6 class="text-secondary">Total Patient</h6>
+                <h6 class="text-secondary">Total Patients</h6>
               </div>
               <div class="carousel_item text-center">
                 <h4 class="text-secondary">{{allPatients}}</h4>
@@ -76,7 +76,7 @@ export default {
 
             <div class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
-                <img src="/images/stethoscope_3359379 (1).png" alt="Appoinment">
+                <img src="/images/stethoscope_3359379 (1).png" alt="Appoinments">
               </div><br/>
               <div class="carousel_item text-center">
                 <h6 class="text-secondary">Appoinment</h6>

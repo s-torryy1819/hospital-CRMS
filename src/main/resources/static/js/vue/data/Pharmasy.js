@@ -40,7 +40,7 @@ export default {
           <th scope="row">{{ medicine.medicineId }}</th>
           <td><b>{{ medicine.nameOfMedicine }}<b/></td>
           <td>{{ medicine.availableInStock }}</td>
-          <td>{{ medicine.price }}</td>
+          <td>{{ medicine.price }} ua hrv</td>
           <td>{{ medicine.needReceipt }}</td>
           <td>{{ medicine.description }}</td>
         </tr>
