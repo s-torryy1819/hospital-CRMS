@@ -52,11 +52,11 @@ export default {
       <form>
   <div class="form-group">
     <label class="bg-warning text-white label_wrapper" for="descInput">Description</label>
-    <input type="text" v-model="description" class="form-control" id="descInput" aria-describedby="name" placeholder="Enter description">
+    <input type="text" v-model="description" class="form-control" id="descInput" required aria-describedby="name" placeholder="Enter description">
   </div>
   <div class="form-group">
     <label class="bg-warning text-white label_wrapper" for="amountInput">Price</label>
-    <input type="text" v-model="price" class="form-control" id="amountInput" placeholder="Price">
+    <input type="text" v-model="price" class="form-control" pattern="[0-9]+" required id="amountInput" placeholder="Price">
   </div>
 
   <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>

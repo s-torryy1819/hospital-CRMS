@@ -79,7 +79,7 @@ export default {
                 <img src="/images/stethoscope_3359379 (1).png" alt="Appoinments">
               </div><br/>
               <div class="carousel_item text-center">
-                <h6 class="text-secondary">Appoinment</h6>
+                <h6 class="text-secondary">Appoinments</h6>
               </div>
               <div class="carousel_item text-center">
                 <h4 class="text-secondary">{{allAppointments}}</h4>

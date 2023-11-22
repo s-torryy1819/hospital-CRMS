@@ -290,12 +290,12 @@ a.button:active {
 }
 
 .checkbox-wrapper-1 [type=checkbox].substituted:focus+label:before {
-    box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em transparent inset, 0 0 0 0.07em rgba(0, 0, 0, 0.1) inset, 0 0 0 3.3px rgba(65, 255, 97, 0.55), 0 0 0 5px rgba(65, 159, 255, 0.3);
+    box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em transparent inset, 0 0 0 0.07em rgba(0, 0, 0, 0.1) inset, 0 0 0 3.3px rgba(172, 166, 146, 0.649), 0 0 0 5px rgba(188, 187, 164, 0.3);
 }
 
 .checkbox-wrapper-1 [type=checkbox].substituted:focus:active+label:before,
 .checkbox-wrapper-1 [type=checkbox].substituted:focus+label:active:before {
-    box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em transparent inset, 0 0 0 0.07em rgba(0, 0, 0, 0.1) inset, 0 0 0 3.3px rgba(65, 255, 135, 0.55), 0 0 0 5px rgba(65, 159, 255, 0.3);
+    box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em transparent inset, 0 0 0 0.07em rgba(0, 0, 0, 0.1) inset, 0 0 0 3.3px rgba(215, 205, 173, 0.649), 0 0 0 5px rgba(161, 173, 186, 0.3);
 }
 
 .checkbox-wrapper-1 [type=checkbox].substituted:disabled+label:before {

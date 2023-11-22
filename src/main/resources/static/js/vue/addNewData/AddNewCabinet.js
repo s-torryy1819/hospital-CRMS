@@ -41,7 +41,7 @@ export default {
     <form>
       <div class="form-group">
         <label class="bg-warning text-white label_wrapper" for="descriptionInput">Cabinet Description:</label>
-        <input type="text" v-model="desc" class="form-control" id="descriptionInput" aria-describedby="name" placeholder="Description">
+        <input type="text" v-model="desc" class="form-control" required id="descriptionInput" aria-describedby="name" placeholder="Description">
       </div>
 
       <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
