@@ -28,37 +28,49 @@ export default {
     AddNewMedicine,
     AddNewProcedure
   },
+  props: ['userInfo'],
   data() {
     return {
+      userInfo: this.userInfo,
       allPages: [
-        "Appointments",
-        "Patients",
-        "Pharmasy",
-        "Procedures",
-        "Visits",
-        "Doctors",
-        "Cabinets",
-        "Add New Cabinet",
-        "Add New Doctor",
-        "Add New Patient",
-        "Add New Appointment",
-        "Add New Medicine",
-        "Add New Procedure",
+        { name: "Appointments", auth: [] },
+        { name: "Patients", auth: [] },
+        { name: "Pharmasy", auth: [] },
+        { name: "Procedures", auth: [] },
+        { name: "Visits", auth: [] },
+        { name: "Doctors", auth: [] },
+        { name: "Cabinets", auth: [] },
+        { name: "Add New Cabinet", auth: ['ADMIN'] },
+        { name: "Add New Doctor", auth: ['ADMIN'] },
+        { name: "Add New Patient", auth: ['ADMIN'] },
+        { name: "Add New Appointment", auth: ['ADMIN'] },
+        { name: "Add New Medicine", auth: ['ADMIN'] },
+        { name: "Add New Procedure", auth: ['ADMIN'] }
       ],
       activePage: "Appointments",
     };
   },
-  methods: {},
+  methods: {
+    includesAuth(page) {
+      if (this.userInfo?.auths)
+        for (var userAuth of this.userInfo?.auths)
+          if (page.auth.length === 0 || page.auth.includes(userAuth))
+            return true
+      return false
+    }
+  },
   template: `
     <br/>
     <div class="btn-group btn-group-toggle dashboard_buttons" data-toggle="buttons" style="display : flex; flex-wrap: wrap;">
-        <label class="btn btn-info" :class="activePage === page ? 'active' : ''" v-for="page in allPages" @click="activePage = page">
+      <template v-for="page in allPages">
+        <label class="btn btn-info" :class="activePage === page.name ? 'active' : ''" @click="activePage = page.name" v-if="includesAuth(page)">
             <input type="radio" name="allPages" :id="page" />
-            {{page}}
+            {{page.name}}
         </label>
+      </template>
     </div>
     
-    <appointments v-if="activePage === 'Appointments'"></appointments>
+    <appointments v-if="activePage === 'Appointments' && userInfo?.auths?.includes('ADMIN')"></appointments>
     <patients v-if="activePage === 'Patients'"></patients>
     <pharmasy v-if="activePage === 'Pharmasy'"></pharmasy>
     <procedures v-if="activePage === 'Procedures'"></procedures>

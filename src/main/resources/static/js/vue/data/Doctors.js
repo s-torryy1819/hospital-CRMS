@@ -39,8 +39,6 @@ export default {
       <th scope="col">Speciality</th>
       <th scope="col">Child Doctor</th>
       <th scope="col">Price Per Visit</th>
-      <th scope="col">Available Time</th>
-      <th scope="col">Blocked Time</th>
     </tr>
   </thead>
   <tbody>
@@ -55,16 +53,6 @@ export default {
         <th scope="row">{{ user.speciality }}</th>
         <th scope="row">{{ user.childDoctor }}</th>
         <th scope="row">{{ user.pricePerVisit }} ua hrv</th>
-        <th scope="row">
-          <ul>
-            <li v-for="time in user.availableTime">{{time}}</li>
-          </ul>
-        </th>
-        <th scope="row">
-          <ul>
-            <li v-for="time in user.blockedTime">{{time}}</li>
-          </ul>
-        </th>
       </template>
     </tr>
   </tbody>

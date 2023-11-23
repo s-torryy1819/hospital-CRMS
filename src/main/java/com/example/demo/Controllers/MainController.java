@@ -5,13 +5,16 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -357,22 +360,60 @@ public class MainController {
                 return "Egon !";
         }
 
-        @GetMapping(value = "/username")
-        @ResponseBody
-        public String currentUserName(Authentication authentication) {
-
-                if (authentication != null)
-                        return authentication.getName();
-                else
-                        return "";
-        }
-
         public static List<LocalDate> getTime(String... dates) {
                 List<LocalDate> list = new ArrayList<>();
                 Stream.of(dates).forEach(time -> {
                         list.add(LocalDate.parse(time));
                 });
                 return list;
+        }
+
+        @GetMapping(value = "/username")
+        @ResponseBody
+        public String currentUserName(Authentication authentication) {
+
+                if (authentication != null) {
+                        return authentication.getName();
+                } else {
+                        return "";
+                }
+        }
+
+        @GetMapping(value = "/userInfo")
+        @ResponseBody
+        public UserInfo currentUserInfo(Authentication authentication) {
+                return new UserInfo(authentication);
+        }
+
+        private class UserInfo {
+
+                String name;
+                List<String> auths;
+
+                public UserInfo(Authentication authentication) {
+                        if (authentication != null) {
+                                this.name = authentication.getName();
+                                this.auths = authentication.getAuthorities().stream().map(auth -> auth.getAuthority())
+                                                .collect(Collectors.toList());
+                        }
+                }
+
+                public String getName() {
+                        return name;
+                }
+
+                public void setName(String name) {
+                        this.name = name;
+                }
+
+                public List<String> getAuths() {
+                        return auths;
+                }
+
+                public void setAuths(List<String> auths) {
+                        this.auths = auths;
+                }
+
         }
 
 }

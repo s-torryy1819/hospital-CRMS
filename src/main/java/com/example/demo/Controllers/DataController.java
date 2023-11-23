@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,7 @@ public class DataController {
     @Autowired
     private SecurityUserDetailsService userDetailsManager;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewAdmin")
     public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
 
@@ -60,6 +62,7 @@ public class DataController {
         return "Saved";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewDoctor")
     public String addNewDoctor(@RequestParam String username, @RequestParam String password,
             @RequestParam String name, @RequestParam String surname, @RequestParam String yearOfBirth,
@@ -73,6 +76,7 @@ public class DataController {
         return "Saved";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewPatient")
     public String addNewPatient(@RequestParam String username, @RequestParam String password,
             @RequestParam String name, @RequestParam String surname, @RequestParam String yearOfBirth,
@@ -85,6 +89,7 @@ public class DataController {
         return "Saved";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addAppointment")
     public String addAppointment(@RequestParam String date,
             @RequestParam String patientId, @RequestParam String cabinetId,
@@ -108,6 +113,7 @@ public class DataController {
         return "Added";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addCabinet")
     public String addCabinet(@RequestParam String description, @RequestParam String doctorId) {
 
@@ -120,6 +126,7 @@ public class DataController {
         return "Added";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addMedicine")
     public String addMedicine(@RequestParam String nameOfMedicine, @RequestParam String description,
             @RequestParam String availableInStock, @RequestParam String price,
@@ -133,6 +140,7 @@ public class DataController {
         return "Added";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addProcedure")
     public String addProcedure(@RequestParam String description, @RequestParam Integer price,
             @RequestParam String cabinetId, @RequestParam String doctorId) {
@@ -151,6 +159,7 @@ public class DataController {
         return "Added";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addVisit")
     public String addVisit(@RequestParam Patient patient, @RequestParam LocalDate date,
 
@@ -191,8 +200,10 @@ public class DataController {
         List<User> list = userRepository.findAll();
         List<User> newList = new ArrayList<>();
         for (User user : list) {
-            if (user.getAuths().contains(Authorities.DOCTOR))
+            if (user.getAuths().contains(Authorities.DOCTOR)) {
+                user.setPassword(null);
                 newList.add(user);
+            }
         }
         return newList;
     }

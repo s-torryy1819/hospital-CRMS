@@ -12,6 +12,7 @@ export default {
   methods: {
     async getAllUsers() {
       const response = await axios.get("http://localhost:8080/getAllUsers");
+      console.log(response.data);
       this.allUsers = response.data;
     },
   },
