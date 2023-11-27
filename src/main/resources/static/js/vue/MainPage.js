@@ -159,7 +159,7 @@ export default {
                 <form class="form-inline mr-auto">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search a Doctor..." aria-label="Search" v-model="searchTermForDoc">
                     <input type="button" class="btn-rounded btn-warning text-white exit_btn" @click="searchActive = searchActive = true" value="Search"></input>
-                    <input type="button" class="btn-rounded btn-danger text-white exit_btn" @click="searchActive = searchActive = false" value="X" v-if="searchActive"></input>
+                    <input type="button" class="btn-rounded btn-danger text-white exit_btn" @click="searchActive = searchActive = false" value="Close" v-if="searchActive"></input>
                 </form>
             </div>
                 <div class="greeting_wrapper bg-info radius_wrapper">
@@ -187,20 +187,25 @@ export default {
     </header>
 
     <section v-if="searchActive">
-        <table>
-            <tr>
+        <br/>
+        <table class="table table-bordered table-hover text-center">
+        <thead>
+            <tr class="bg-success text-white">
+                <th>Doctor Id</th>
                 <th>Name</th>
                 <th>Surname</th>
-                <th>UserId</th>
                 <th>Speciality</th>
             </tr>
+        </thead>
+        <tbody>
             <tr v-for="doc in filteredDoc">
+                <td>{{doc.userId}}</td>
                 <td>{{doc.name}}</td>
                 <td>{{doc.surname}}</td>
-                <td>{{doc.userId}}</td>
                 <td>{{doc.speciality}}</td>
             </tr>
         </table>
+        </tbody>
     </section>
 
     <section>

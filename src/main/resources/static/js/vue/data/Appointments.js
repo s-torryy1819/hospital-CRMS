@@ -8,15 +8,35 @@ export default {
   data() {
     return {
       allAppointments: {},
+      userInfo: {},
     };
   },
   methods: {
     async getAllAppointments() {
-      const response = await axios.get("http://localhost:8080/getAllAppointments");
-      this.allAppointments = response.data;
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
+
+      console.log(this.userInfo.auths == "ADMIN");
+      console.log(this.userInfo.auths === "ADMIN");
+      console.log(this.userInfo.auths == "DOCTOR");
+      console.log(this.userInfo.auths === "DOCTOR");
+      console.log(this.userInfo.auths == "PATIENT");
+      console.log(this.userInfo.auths === "PATIENT");
+
+      if(this.userInfo.auths == "ADMIN"){
+        const response = await axios.get("http://localhost:8080/getAllAppointments");
+        this.allAppointments = response.data;
+      }
+      else if(this.userInfo.auths == "DOCTOR" || this.userInfo.auths == "PATIENT"){
+        const response = await axios.get("http://localhost:8080/getAppointmentsForUser");
+        this.allAppointments = response.data;
+      }
     },
   },
   beforeMount() {
+    this.getAllAppointments();
+  },
+  created() {
     this.getAllAppointments();
   },
   template: `
