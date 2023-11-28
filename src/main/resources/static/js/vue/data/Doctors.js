@@ -4,8 +4,10 @@ export default {
   components: {
     axios
   },
+  props: ['userInfo'],
   data() {
     return {
+      userInfo: this.userInfo,
       allUsers: {},
     };
   },
@@ -13,6 +15,13 @@ export default {
     async getAllUsers() {
       const response = await axios.get("http://localhost:8080/getAllUsers");
       this.allUsers = response.data;
+    },
+    includesAuth(page) {
+      if (this.userInfo?.auths)
+        for (var userAuth of this.userInfo?.auths)
+          if (page.auth.length === 0 || page.auth.includes(userAuth))
+            return true
+      return false
     },
   },
   beforeMount() {
@@ -33,9 +42,9 @@ export default {
       <th scope="col">Doctor ID</th>
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
-      <th scope="col">Year of Birth</th>
-      <th scope="col">Address</th>
-      <th scope="col">Phone</th>
+      <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Year of Birth</th>
+      <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Address</th>
+      <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Phone</th>
       <th scope="col">Speciality</th>
       <th scope="col">Child Doctor</th>
       <th scope="col">Price Per Visit</th>
@@ -44,12 +53,12 @@ export default {
   <tbody>
     <tr v-for="user in allUsers">
       <template v-if="user?.authorities[0].authority === 'DOCTOR'">
-        <th scope="row">{{ user.userId }}</th>
+        <th scope="row"># {{ user.userId }}</th>
         <th scope="row">{{ user.name }}</th>
         <th scope="row">{{ user.surname }}</th>
-        <th scope="row">{{ user.yearOfBirth }}</th>
-        <th scope="row">{{ user.address }}</th>
-        <th scope="row">{{ user.phone }}</th>
+        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.yearOfBirth }}</th>
+        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.address }}</th>
+        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.phone }}</th>
         <th scope="row">{{ user.speciality }}</th>
         <th scope="row">{{ user.childDoctor }}</th>
         <th scope="row">{{ user.pricePerVisit }} ua hrv</th>

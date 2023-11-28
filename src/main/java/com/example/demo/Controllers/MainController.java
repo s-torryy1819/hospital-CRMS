@@ -152,7 +152,7 @@ public class MainController {
                                 Arrays.asList(Authorities.DOCTOR), practicioner);
                 userDetailsManager.createUser("Kathrine Schneider", "123xa",
                                 Arrays.asList(Authorities.DOCTOR), gynecologist);
-                userDetailsManager.createUser("PeterEckhardt", "123xa",
+                userDetailsManager.createUser("Peter Eckhardt", "123xa",
                                 Arrays.asList(Authorities.DOCTOR), oncologist);
                 userDetailsManager.createUser("Sofia Muller", "123xa",
                                 Arrays.asList(Authorities.DOCTOR), neurologist);
@@ -173,7 +173,7 @@ public class MainController {
                                 Arrays.asList(Authorities.PATIENT), patient3);
                 userDetailsManager.createUser("Mark Becker", "123xa",
                                 Arrays.asList(Authorities.PATIENT), patient4);
-                userDetailsManager.createUser("AntonWagner", "123xa",
+                userDetailsManager.createUser("Anton Wagner", "123xa",
                                 Arrays.asList(Authorities.PATIENT), patient5);
                 userDetailsManager.createUser("Chris Fischer", "123xa",
                                 Arrays.asList(Authorities.PATIENT), patient6);
@@ -352,12 +352,6 @@ public class MainController {
                 procedureRepository.save(procedure10);
 
                 return new ModelAndView("index");
-        }
-
-        @PreAuthorize("hasAuthority('ADMIN')")
-        @GetMapping("/egon")
-        public String getEgon() {
-                return "Egon !";
         }
 
         public static List<LocalDate> getTime(String... dates) {

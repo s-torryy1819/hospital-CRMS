@@ -1,6 +1,5 @@
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
-
 export default {
   components: {
     axios
@@ -8,12 +7,25 @@ export default {
   data() {
     return {
       allAppointments: {},
+      userInfo: {},
+      noAppointments: null
     };
   },
   methods: {
     async getAllAppointments() {
-      const response = await axios.get("http://localhost:8080/getAllAppointments");
-      this.allAppointments = response.data;
+      const data = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data.data.auths[0];
+
+      if(this.userInfo == "ADMIN"){
+        const response = await axios.get("http://localhost:8080/getAllAppointments");
+        this.allAppointments = response.data;
+      }
+      else if(this.userInfo == "DOCTOR" || this.userInfo == "PATIENT"){
+        const response = await axios.get("http://localhost:8080/getAppointmentsForUser");
+        this.allAppointments = response.data;
+      }
+
+      this.noAppointments = (this.allAppointments.length == 0);
     },
   },
   beforeMount() {
@@ -26,7 +38,14 @@ export default {
           </div>
 
       </div><br/>
-      <table class="table table-bordered table-hover">
+
+      <div v-if="noAppointments" class="radius_wrapper notification_wrapper">
+        <div class="notification">
+          No appointments..
+        </div>
+      </div>
+
+      <table v-else class="table table-bordered table-hover">
       <thead>
         <tr class="bg-success text-white">
           <th scope="col">Appointment ID</th>
@@ -38,14 +57,13 @@ export default {
       </thead>
       <tbody>
         <tr v-for="appointment in allAppointments">
-          <th scope="row">{{ appointment.doctorAppointmentId }}</th>
-          <td>{{ appointment.doctor.name }} {{ appointment.doctor.surname }} <b>{{ appointment.doctor.speciality }}<b/></td>
+          <th scope="row"># {{ appointment.doctorAppointmentId }}</th>
+          <td>{{ appointment.doctor.name }} {{ appointment.doctor.surname }} - <b>{{ appointment.doctor.speciality }}<b/></td>
           <td>{{ appointment.patient.name }} {{ appointment.patient.surname }}</td>
-          <td><b>{{ appointment.cabinet.cabinetId }}<b/> {{ appointment.cabinet.description }}</td>
+          <td><b># {{ appointment.cabinet.cabinetId }} - <b/> {{ appointment.cabinet.description }}</td>
           <td>{{ appointment.date }}</td>
         </tr>
       </tbody>
     </table>
-      
       `,
 };

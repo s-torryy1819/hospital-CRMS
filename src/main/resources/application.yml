@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password: 1234567890xa
+    password: root
     url: jdbc:mysql://localhost:3306/hospitalcrm
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
@@ -14,3 +14,4 @@ spring:
        dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+# change password to : 1234567890xa
