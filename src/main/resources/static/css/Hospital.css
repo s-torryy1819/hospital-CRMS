@@ -175,15 +175,32 @@ a.button:active {
     justify-content: space-around;
 }
 
+.carousel_info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.carousel_info>div {
+    margin: 6px;
+}
+
 .emergency {
     display: flex;
     justify-content: space-between;
+}
+
+.info_item {
+    width: 50vw;
 }
 
 .carousel_item_wrapper,
 .emergency_item_wrapper,
 .emergency_item_wrapper2 {
     padding: 40px;
+}
+
+.carousel_item_wrapper_info {
+    padding: 20px;
 }
 
 .emergency_item_wrapper {
@@ -327,4 +344,14 @@ a.button:active {
 
 .dashboard_buttons {
     width: 70vw;
+}
+
+.info_item_wrapper {
+    height: 490px;
+    margin-right: 30px;
+    background-color: rgb(75, 229, 157);
+}
+
+.info_item_wrapper2 {
+    background-color: rgb(75, 203, 229);
 }
