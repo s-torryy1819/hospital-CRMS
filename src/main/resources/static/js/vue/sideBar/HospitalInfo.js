@@ -30,11 +30,11 @@ export default {
             <h3 class="text-white"><b>Emergency?</b><br/><br/>
             <b>Medical Service: 112</b><br/><br/>
             <div class="emergency_text_wrapper">KV-Notarztdienst (Emergency doctor service provided by health insurance): 116 117
-            Poison Emergency Call: +49 361 – 730730
+            Poison Emergency Call: +49 361 - 730730
             University of Leipzig Medical Center (24/7):
-            +49 341 – 97 109
+            +49 341 - 97 109
             Emergency Department University of Leipzig Medical Center
-            +49 341 –  97 17800
+            +49 341 -  97 17800
             Paul-List-Straße 27
             04103 Leipzig
             </div>

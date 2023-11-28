@@ -328,3 +328,14 @@ a.button:active {
 .dashboard_buttons {
     width: 70vw;
 }
+
+.notification_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vw;
+    padding: 2vw;
+    background-color: #2f92aa;
+    font-size: x-large;
+    color: white;
+}

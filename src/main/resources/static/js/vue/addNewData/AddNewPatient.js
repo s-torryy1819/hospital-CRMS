@@ -70,7 +70,7 @@ export default {
     </div>
     <div class="form-group">
       <label class="bg-warning text-white label_wrapper" for="phoneInput">Phone</label>
-      <input type="text" v-model="phone" class="form-control" pattern="\\d{14}" maxlength="14" required id="phoneInput" placeholder="Phone">
+      <input type="text" v-model="phone" class="form-control" pattern="\\+\\d{13}" maxlength="14" required id="phoneInput" placeholder="Phone">
     </div>
   <div class="form-group">
     <label class="bg-warning text-white label_wrapper" for="workAddressInput">Work Address</label>

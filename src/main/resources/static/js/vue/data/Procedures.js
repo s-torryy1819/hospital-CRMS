@@ -37,7 +37,7 @@ export default {
       </thead>
       <tbody>
         <tr v-for="procedure in allProcedures">
-          <th scope="row">{{ procedure.procedureId }}</th>
+          <th scope="row"># {{ procedure.procedureId }}</th>
           <td><b>{{ procedure.description }}<b/></td>
           <td>{{ procedure.price }} ua hrv</td>
           <td>{{ procedure.cabinet.cabinetId }} {{ procedure.cabinet.description }}</td>

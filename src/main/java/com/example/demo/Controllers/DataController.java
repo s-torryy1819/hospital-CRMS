@@ -218,6 +218,22 @@ public class DataController {
         return cabinetRepository.findAll();
     }
 
+    @GetMapping(path = "/getCabinetsForUser")
+    public List<Cabinet> getCabinetsForUser() {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        final User user = userDetailsManager.getUserByUsername(username);
+
+        if (user instanceof Doctor) {
+            return cabinetRepository.findAll().stream()
+                    .filter(cab -> cab.getDoctor().getUsername().equals(username)).collect(Collectors.toList());
+        } 
+        else {
+            return Collections.emptyList();
+        }
+
+    }
+
     @GetMapping(path = "/getAllMedicines")
     public List<Medicine> getAllMedicines() {
         return medicineRepository.findAll();
@@ -226,6 +242,24 @@ public class DataController {
     @GetMapping(path = "/getAllVisits")
     public List<Visit> getAllVisits() {
         return visitRepository.findAll();
+    }
+
+    @GetMapping(path = "/getVisitsForUser")
+    public List<Visit> getVisitsForUser() {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        final User user = userDetailsManager.getUserByUsername(username);
+
+        if (user instanceof Doctor) {
+            return visitRepository.findAll().stream()
+                    .filter(visit -> visit.getDoctor().getUsername().equals(username)).collect(Collectors.toList());
+        } else if (user instanceof Patient) {
+            return visitRepository.findAll().stream()
+                    .filter(visit -> visit.getPatient().getUsername().equals(username)).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+
     }
 
     @GetMapping(path = "/getAllProcedures")
@@ -241,8 +275,6 @@ public class DataController {
     @GetMapping(path = "/getAppointmentsForUser")
     public List<DoctorAppointment> getAppointmentsForUser() {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        System.out.println(username);
 
         final User user = userDetailsManager.getUserByUsername(username);
 

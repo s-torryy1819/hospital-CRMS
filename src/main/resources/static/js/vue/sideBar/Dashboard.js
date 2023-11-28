@@ -34,7 +34,7 @@ export default {
       userInfo: this.userInfo,
       allPages: [
         { name: "Appointments", auth: [] },
-        { name: "Patients", auth: [] },
+        { name: "Patients", auth: ['ADMIN'] },
         { name: "Pharmasy", auth: [] },
         { name: "Procedures", auth: [] },
         { name: "Visits", auth: [] },
@@ -70,7 +70,7 @@ export default {
       </template>
     </div>
     
-    <appointments v-if="activePage === 'Appointments' && userInfo?.auths?.includes('ADMIN')"></appointments>
+    <appointments v-if="activePage === 'Appointments'"></appointments>
     <patients v-if="activePage === 'Patients'"></patients>
     <pharmasy v-if="activePage === 'Pharmasy'"></pharmasy>
     <procedures v-if="activePage === 'Procedures'"></procedures>

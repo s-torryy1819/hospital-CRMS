@@ -37,7 +37,7 @@ export default {
       </thead>
       <tbody>
         <tr v-for="medicine in allMedicines">
-          <th scope="row">{{ medicine.medicineId }}</th>
+          <th scope="row"># {{ medicine.medicineId }}</th>
           <td><b>{{ medicine.nameOfMedicine }}<b/></td>
           <td>{{ medicine.availableInStock }}</td>
           <td>{{ medicine.price }} ua hrv</td>
