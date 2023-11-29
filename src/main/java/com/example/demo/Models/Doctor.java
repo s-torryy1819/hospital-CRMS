@@ -116,6 +116,18 @@ public class Doctor extends User {
         return true;
     }
 
+    public void setNewData(String name, String surname, String yearOfBirth, String address, String phone,
+            String speciality, Boolean childDoctor, String pricePerVisit) {
+        this.name = name;
+        this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.speciality = speciality;
+        this.childDoctor = childDoctor;
+        this.pricePerVisit = pricePerVisit;
+    }
+
     public String getName() {
         return name;
     }

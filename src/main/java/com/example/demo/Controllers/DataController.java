@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,43 @@ public class DataController {
                 Arrays.asList(Authorities.DOCTOR),
                 new Doctor(name, surname, yearOfBirth, address, phone, speciality, Boolean.valueOf(childDoctor),
                         pricePerVisit));
+        return "Saved";
+    }
+
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @PostMapping(path = "/editDoctorData")
+    public String editDoctorData(@RequestParam String name, @RequestParam String surname,
+            @RequestParam String yearOfBirth,
+            @RequestParam String address, @RequestParam String phone, @RequestParam String speciality,
+            @RequestParam String pricePerVisit, @RequestParam String childDoctor) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Doctor doctor = (Doctor) userDetailsManager.getUserByUsername(username);
+        doctor.setNewData(name, surname, yearOfBirth, address, phone, speciality, Boolean.valueOf(childDoctor),
+                pricePerVisit);
+
+        userRepository.save(doctor);
+        return "Saved";
+    }
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @PostMapping(path = "/editPatientData")
+    public String editPatientData(@RequestParam String name, @RequestParam String surname,
+            @RequestParam String yearOfBirth,
+            @RequestParam String address, @RequestParam String phone, @RequestParam String workAddress,
+            @RequestParam String disability, @RequestParam String chronicDiseases) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Patient patient = (Patient) userDetailsManager.getUserByUsername(username);
+        patient.setNewData(name, surname, yearOfBirth, address, phone, workAddress, Boolean.valueOf(disability),
+                chronicDiseases);
+
+        userRepository.save(patient);
+
         return "Saved";
     }
 
@@ -208,6 +246,39 @@ public class DataController {
         return newList;
     }
 
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @GetMapping(path = "/getDoctorData")
+    public Doctor getDoctorData() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        userDetailsManager.getUserByUsername(username);
+        return (Doctor) userDetailsManager.getUserByUsername(username);
+    }
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @GetMapping(path = "/getPatientData")
+    public Patient getPatientData() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        userDetailsManager.getUserByUsername(username);
+        return (Patient) userDetailsManager.getUserByUsername(username);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping(path = "/getAdminData")
+    public User getAdminData() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        userDetailsManager.getUserByUsername(username);
+        return (User) userDetailsManager.getUserByUsername(username);
+    }
+
     @GetMapping(path = "/getAllUsers")
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -227,11 +298,9 @@ public class DataController {
         if (user instanceof Doctor) {
             return cabinetRepository.findAll().stream()
                     .filter(cab -> cab.getDoctor().getUsername().equals(username)).collect(Collectors.toList());
-        } 
-        else {
+        } else {
             return Collections.emptyList();
         }
-
     }
 
     @GetMapping(path = "/getAllMedicines")

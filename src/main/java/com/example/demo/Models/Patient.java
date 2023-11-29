@@ -53,6 +53,19 @@ public class Patient extends User {
         this.chronicDiseases = chronicDiseases;
     }
 
+    public void setNewData(String name, String surname, String yearOfBirth, String address, String phone,
+            String workAddress,
+            Boolean disability, String chronicDiseases) {
+        this.name = name;
+        this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.workAddress = workAddress;
+        this.disability = disability;
+        this.chronicDiseases = chronicDiseases;
+    }
+
     public String getName() {
         return name;
     }

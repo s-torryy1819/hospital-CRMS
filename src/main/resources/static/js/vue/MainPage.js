@@ -2,6 +2,7 @@ import Dashboard from "./sideBar/Dashboard.js";
 import Statistics from "./sideBar/Statistics.js";
 import EmergencyInfo from "./sideBar/EmergencyInfo.js";
 import HospitalInfo from "./sideBar/HospitalInfo.js";
+import MyCard from "./sideBar/MyCard.js";
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
 export default {
@@ -10,12 +11,13 @@ export default {
         HospitalInfo,
         EmergencyInfo,
         Statistics,
+        MyCard,
         axios
     },
     data() {
         return {
             userInfo: {},
-            allPages: ["Dashboard", "Statistics", "Emergency Info", "Hospital Info"],
+            allPages: ["Dashboard", "Statistics", "Emergency Info", "Hospital Info", "My Card"],
             activePage: "Dashboard",
             allDocs: [],
             searchActive: false,
@@ -233,6 +235,7 @@ export default {
             <statistics v-if="activePage === 'Statistics'"></statistics>
             <emergency-info v-if="activePage === 'Emergency Info'"></emergency-info>
             <hospital-info v-if="activePage === 'Hospital Info'"></hospital-info>
+            <my-card v-if="activePage === 'My Card'"></my-card>
         </article>
     </section>
 

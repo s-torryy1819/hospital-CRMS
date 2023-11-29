@@ -21,8 +21,6 @@ export default {
     async getAllInfo() {
       const data = await axios.get("http://localhost:8080/userInfo");
       this.userInfo = data.data.auths[0];
-      console.log(this.userInfo);
-      console.log(this.userInfo.includes('DOCTOR'));
 
       const response = await axios.get("http://localhost:8080/getAllMedicines");
       this.allMedicines = response.data.length;
