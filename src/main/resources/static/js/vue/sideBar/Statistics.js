@@ -21,6 +21,8 @@ export default {
     async getAllInfo() {
       const data = await axios.get("http://localhost:8080/userInfo");
       this.userInfo = data.data.auths[0];
+      console.log(this.userInfo);
+      console.log(this.userInfo.includes('DOCTOR'));
 
       const response = await axios.get("http://localhost:8080/getAllMedicines");
       this.allMedicines = response.data.length;
@@ -33,14 +35,14 @@ export default {
       const response4 = await axios.get("http://localhost:8080/getAllStaff");
       this.allStaff = response4.data.length;
 
-      if(this.userInfo == "DOCTOR" || this.userInfo == "PATIENT"){
+      if (this.userInfo == "DOCTOR" || this.userInfo == "PATIENT") {
         const response5 = await axios.get("http://localhost:8080/getAppointmentsForUser"); // for Doctor and Patient
         this.myAppointments = response5.data.length;
 
         const response7 = await axios.get("http://localhost:8080/getVisitsForUser"); // for Doctor and Patient
         this.myVisits = response7.data.length;
 
-        if(this.userInfo == "DOCTOR"){
+        if (this.userInfo == "DOCTOR") {
           const response6 = await axios.get("http://localhost:8080/getCabinetsForUser"); // for Doctor
           this.myCabinets = response6.data.length;
         }
@@ -130,7 +132,13 @@ export default {
           
         <br/>
 
-        <div class="radius_wrapper notification_wrapper">
+        <div v-if="userInfo?.includes('DOCTOR')" class="radius_wrapper notification_wrapper">
+          <div class="notification">
+            My Personal Statistics :
+          </div>
+        </div>
+
+        <div v-if="userInfo?.includes('PATIENT')" class="radius_wrapper notification_wrapper">
           <div class="notification">
             My Personal Statistics :
           </div>
@@ -139,7 +147,7 @@ export default {
         <div class="turn_items appointment_header">
         <div class="carousel_wrapper">
           <div class="carousel">
-            <div v-if="userInfo?.auths?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
+            <div v-if="userInfo?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
                 <img src="/images/patient_3359120 (2).png" alt="Patients">
               </div><br/>
@@ -151,7 +159,7 @@ export default {
               </div>
             </div>
             <br/>
-            <div v-if="userInfo?.auths?.includes('PATIENT')" class="bg-white radius_wrapper carousel_item_wrapper">
+            <div v-if="userInfo?.includes('PATIENT')" class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
                 <img src="/images/patient_3359120 (2).png" alt="Patients">
               </div><br/>
@@ -164,7 +172,7 @@ export default {
             </div>
             <br/>
 
-            <div v-if="userInfo?.auths?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
+            <div v-if="userInfo?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
                 <img src="/images/bed_3359393 (1).png" alt="Cabinets">
               </div><br/>
@@ -179,24 +187,24 @@ export default {
 
             <br/>
 
-            <div v-if="userInfo?.auths?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
+            <div v-if="userInfo?.includes('DOCTOR')" class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
                 <img src="/images/stethoscope_3359379 (1).png" alt="Appoinments">
               </div><br/>
               <div class="carousel_item text-center">
-                <h6 class="text-secondary">My Appoinments</h6>
+                <h6 class="text-secondary">My Planned Appoinments</h6>
               </div>
               <div class="carousel_item text-center">
                 <h4 class="text-secondary">{{myAppointments}}</h4>
               </div>
             </div>
             <br/>
-            <div v-if="userInfo?.auths?.includes('PATIENT')" class="bg-white radius_wrapper carousel_item_wrapper">
+            <div v-if="userInfo?.includes('PATIENT')" class="bg-white radius_wrapper carousel_item_wrapper">
               <div class="carousel_item">
                 <img src="/images/stethoscope_3359379 (1).png" alt="Appoinments">
               </div><br/>
               <div class="carousel_item text-center">
-                <h6 class="text-secondary">My Appoinments</h6>
+                <h6 class="text-secondary">My Planned Appoinments</h6>
               </div>
               <div class="carousel_item text-center">
                 <h4 class="text-secondary">{{myAppointments}}</h4>
