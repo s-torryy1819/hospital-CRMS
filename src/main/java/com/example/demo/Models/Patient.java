@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.example.demo.Security.Models.User;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -18,8 +21,11 @@ public class Patient extends User {
     private String phone;
     private String workAddress;
     private Boolean disability;
-    private List<Integer> visitHistoryIdList;
     private String chronicDiseases;
+
+    @Column(name = "visitHistoryIdList", nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Integer> visitHistoryIdList;
 
     @OneToMany(mappedBy = "patient")
     List<DoctorAppointment> appointments = new ArrayList<>();
@@ -130,11 +136,11 @@ public class Patient extends User {
         this.chronicDiseases = chronicDiseases;
     }
 
-    public List<Integer> getVisitHistoryId() {
+    public List<Integer> getVisitHistoryIdList() {
         return visitHistoryIdList;
     }
 
-    public void setVisitHistoryId(List<Integer> visitHistoryIdList) {
+    public void setVisitHistoryIdList(List<Integer> visitHistoryIdList) {
         this.visitHistoryIdList = visitHistoryIdList;
     }
 
