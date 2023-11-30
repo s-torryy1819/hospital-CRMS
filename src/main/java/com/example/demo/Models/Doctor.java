@@ -2,17 +2,12 @@ package com.example.demo.Models;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Exceptions.DoctorExceptionReason;
 import com.example.demo.Security.Models.User;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

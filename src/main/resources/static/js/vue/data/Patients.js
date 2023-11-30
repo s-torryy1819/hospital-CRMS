@@ -45,7 +45,8 @@ export default {
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.address }}</td>
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.phone }}</td>
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.workAddress }}</td>
-      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.disability }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT' && user.disability"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128532;</p></p></td>
+      <td v-else-if="user.authorities[0].authority === 'PATIENT' && !user.disability" ><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128578;</p></p></td>
       <td v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.visitHistoryId }}</td>
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.chronicDiseases }}</td>
     </tr>
