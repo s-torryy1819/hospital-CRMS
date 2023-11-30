@@ -53,17 +53,6 @@ public class DataController {
     @Autowired
     private SecurityUserDetailsService userDetailsManager;
 
-    // @PreAuthorize("hasAuthority('ADMIN')")
-    // @PostMapping(path = "/addNewAdmin")
-    // public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
-
-    //     User n = new User();
-    //     n.setUsername(username);
-    //     n.setPassword(password);
-    //     userRepository.save(n);
-    //     return "Saved";
-    // }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewDoctor")
     public String addNewDoctor(@RequestParam String username, @RequestParam String password,
