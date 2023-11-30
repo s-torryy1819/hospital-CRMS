@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,16 +53,16 @@ public class DataController {
     @Autowired
     private SecurityUserDetailsService userDetailsManager;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping(path = "/addNewAdmin")
-    public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
+    // @PreAuthorize("hasAuthority('ADMIN')")
+    // @PostMapping(path = "/addNewAdmin")
+    // public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
 
-        User n = new User();
-        n.setUsername(username);
-        n.setPassword(password);
-        userRepository.save(n);
-        return "Saved";
-    }
+    //     User n = new User();
+    //     n.setUsername(username);
+    //     n.setPassword(password);
+    //     userRepository.save(n);
+    //     return "Saved";
+    // }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewDoctor")
@@ -128,37 +129,52 @@ public class DataController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(path = "/addNewAdmin")
+    public String addNewAdmin(@RequestParam String username, @RequestParam String password) {
+
+        userDetailsManager.createUser(username, password,
+                Arrays.asList(Authorities.ADMIN));
+        return "Saved";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addAppointment")
     public String addAppointment(@RequestParam String date,
-            @RequestParam String patientId, @RequestParam String cabinetId,
-            @RequestParam String doctorId) throws DoctorException {
+            @RequestParam String patientUsername, @RequestParam String cabinetId,
+            @RequestParam String docUsername) throws DoctorException {
 
-        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
-                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
-                .findFirst().get();
+        userDetailsManager.getUserByUsername(docUsername);
+        Doctor selectedDoc = (Doctor) userDetailsManager.getUserByUsername(docUsername);
+
+        System.out.println("\nDoctor: " + selectedDoc.toString());
+
         Cabinet selectedCab = getAllCabinets().stream()
                 .filter(cab -> cab.getCabinetId().equals(Integer.valueOf(cabinetId)))
                 .findFirst().get();
-        Patient selectedPat = (Patient) getAllPatients().stream()
-                .filter(cab -> cab.getUserId().equals(Long.valueOf(patientId)))
-                .findFirst().get();
+
+        userDetailsManager.getUserByUsername(docUsername);
+        Patient selectedPatient = (Patient) userDetailsManager.getUserByUsername(patientUsername);
+        System.out.println("\nPatient: " + selectedPatient.toString());
 
         selectedDoc.setNewAppointmentDate(LocalDate.parse(date));
 
-        DoctorAppointment a = new DoctorAppointment(selectedDoc, selectedPat, selectedCab, LocalDate.parse(date));
+        DoctorAppointment a = new DoctorAppointment(selectedDoc, selectedPatient, selectedCab, LocalDate.parse(date));
 
+        System.out.println("\nDoctorAppointment: " + a.toString());
         appointmentRepository.save(a);
         return "Added";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addCabinet")
-    public String addCabinet(@RequestParam String description, @RequestParam String doctorId) {
+    public String addCabinet(@RequestParam String description, @RequestParam String username) {
 
-        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
-                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
-                .findFirst().get();
+        userDetailsManager.getUserByUsername(username);
+        Doctor selectedDoc = (Doctor) userDetailsManager.getUserByUsername(username);
+
+        System.out.println("\nDoctor: " + selectedDoc.toString());
         Cabinet a = new Cabinet(description, selectedDoc);
+        System.out.println("\nCabinet: " + a.toString());
 
         cabinetRepository.save(a);
         return "Added";
@@ -181,11 +197,10 @@ public class DataController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addProcedure")
     public String addProcedure(@RequestParam String description, @RequestParam Integer price,
-            @RequestParam String cabinetId, @RequestParam String doctorId) {
+            @RequestParam String cabinetId, @RequestParam String username) {
 
-        Doctor selectedDoc = (Doctor) getAllDoctors().stream()
-                .filter(doc -> doc.getUserId().equals(Long.valueOf(doctorId)))
-                .findFirst().get();
+        userDetailsManager.getUserByUsername(username);
+        Doctor selectedDoc = (Doctor) userDetailsManager.getUserByUsername(username);
 
         Cabinet selectedCab = getAllCabinets().stream()
                 .filter(cab -> cab.getCabinetId().equals(Integer.valueOf(cabinetId)))

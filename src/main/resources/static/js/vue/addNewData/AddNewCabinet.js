@@ -8,7 +8,7 @@ export default {
     return {
       allDoctors: {},
       desc: null,
-      selectedDocId: null
+      selectedDocUsername: null
     };
   },
   methods: {
@@ -19,13 +19,10 @@ export default {
 
     addCabinet() {
 
-      console.log(this.desc);
-      console.log(this.selectedDocId);
-
       axios.post(`/addCabinet`, null, {
         params: {
           description: this.desc,
-          doctorId: this.selectedDocId
+          username: this.selectedDocUsername
         }
       })
         .then(response => response.status)
@@ -45,8 +42,8 @@ export default {
       </div>
 
       <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
-      <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="selectedDocId">
-        <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+      <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="selectedDocUsername">
+        <option v-for="doctor in allDoctors" :value="doctor.username">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
       </select><br/><br/>
       <button type="submit" class="btn btn-success" @click="addCabinet()">Add a Cabinet</button>
     </form>

@@ -11,15 +11,15 @@ export default {
       allCabinets: {},
       availableTime: {},
       cabId: null,
-      doctorId: null,
-      patientId: null,
+      docUsername: null,
+      patientUsername: null,
       cabinetsForSelectedDoc: null,
       onChange(e) {
         this.selectedDoc = e.target.value;
 
         if (this.selectedDoc !== null) {
           this.allCabinets.forEach(cabinet => {
-            if (cabinet.doctor.userId == this.selectedDoc) {
+            if (cabinet.doctor.username == this.docUsername) {
               this.cabinetsForSelectedDoc = JSON.parse(JSON.stringify(cabinet));
               console.log(this.cabinetsForSelectedDoc);
             }
@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     allCabinetsForCurrentDoc() {
-      if (this.doctorId) {
-        this.availableTime = this.allDoctors?.filter(doc => doc.userId === this.doctorId)[0].availableTime;
+      if (this.docUsername) {
+        this.availableTime = this.allDoctors?.filter(doc => doc.username === this.docUsername)[0].availableTime;
 
-        return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId);
+        return this.allCabinets?.filter(cabinet => cabinet.doctor.username === this.docUsername);
       }
     }
   },
@@ -52,9 +52,9 @@ export default {
       axios.post(`/addAppointment`, null, {
         params: {
           date: this.date,
-          patientId: this.patientId,
+          patientUsername: this.patientUsername,
           cabinetId: this.cabinetId,
-          doctorId: this.doctorId
+          docUsername: this.docUsername
         }
       })
         .then(response => response.status)
@@ -70,23 +70,23 @@ export default {
     <form>
 
 <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
-<select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="doctorId">
-      <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+<select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="docUsername">
+      <option v-for="doctor in allDoctors" :value="doctor.username">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
 </select><br/><br/>
 
 <label class="bg-warning text-white label_wrapper" for="patSelection">Select a Patient: </label><br/>
-<select class="form-select" aria-label="Default select example" id="patSelection" v-model="patientId">
-  <option v-for="patient in allPatients" :value="patient.userId">{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
+<select class="form-select" aria-label="Default select example" id="patSelection" v-model="patientUsername">
+  <option v-for="patient in allPatients" :value="patient.username">{{patient.userId}} {{patient.name}} {{patient.surname}}</option>
 </select><br/><br/>
 
-<div class="selection" v-if="doctorId">
+<div class="selection" v-if="docUsername">
 <label class="bg-warning text-white label_wrapper" for="cabinetSelection">Select a Cabinet: </label><br/>
 <select class="form-select" aria-label="Default select example" id="cabinetSelection" v-model="cabinetId">
       <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
 </select><br/><br/>
 </div>
 
-<div class="selection" v-if="doctorId">
+<div class="selection" v-if="docUsername">
 <label class="bg-warning text-white label_wrapper" for="dateSelection">Choose a date from available ones :</label><br/>
 <select class="form-select" aria-label="Default select example" id="dateSelection selection" v-model="date">
   <option v-for="time in availableTime" :value="time"> {{time}} </option>

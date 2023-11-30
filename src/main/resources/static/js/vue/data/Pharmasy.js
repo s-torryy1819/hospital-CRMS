@@ -37,11 +37,12 @@ export default {
       </thead>
       <tbody>
         <tr v-for="medicine in allMedicines">
-          <th scope="row"># {{ medicine.medicineId }}</th>
+          <td># {{ medicine.medicineId }}</td>
           <td><b>{{ medicine.nameOfMedicine }}<b/></td>
           <td>{{ medicine.availableInStock }}</td>
           <td>{{ medicine.price }} ua hrv</td>
-          <td>{{ medicine.needReceipt }}</td>
+          <td v-if="medicine.needReceipt"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128077;</p></p></td>
+          <td v-else><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128076;</p></p></td>
           <td>{{ medicine.description }}</td>
         </tr>
       </tbody>

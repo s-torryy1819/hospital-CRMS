@@ -10,7 +10,7 @@ export default {
             allCabinets: {},
             cabId: null,
             description: null,
-            doctorId: null,
+            username: null,
             price: null,
             // onChange(e) {
             //     this.cabId = e.target.value;
@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         allCabinetsForCurrentDoc() {
-            return this.allCabinets?.filter(cabinet => cabinet.doctor.userId === this.doctorId)
+            return this.allCabinets?.filter(cabinet => cabinet.doctor.username === this.username)
         }
     },
     methods: {
@@ -36,7 +36,7 @@ export default {
                     description: this.description,
                     price: this.price,
                     cabinetId: this.cabId,
-                    doctorId: this.doctorId
+                    username: this.username
                 }
             })
                 .then(response => response.status)
@@ -60,13 +60,13 @@ export default {
   </div>
 
   <label class="bg-warning text-white label_wrapper" for="doctorSelection">Select a Doctor: </label><br/>
-  <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="doctorId">
-        <option v-for="doctor in allDoctors" :value="doctor.userId">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
+  <select class="form-select" aria-label="Default select example" id="doctorSelection" v-model="username">
+        <option v-for="doctor in allDoctors" :value="doctor.username">{{doctor.speciality}} {{doctor.name}} {{doctor.surname}}</option>
    </select><br/><br/>
 
-<div class="selection" v-if="doctorId">
-<label class="bg-warning text-white label_wrapper" for="cabinetSelection" v-if="doctorId">Select a Cabinet: </label><br/>
-<select class="form-select" aria-label="Default select example" v-if="doctorId" id="cabinetSelection" v-model="cabId">
+<div class="selection" v-if="username">
+<label class="bg-warning text-white label_wrapper" for="cabinetSelection" v-if="username">Select a Cabinet: </label><br/>
+<select class="form-select" aria-label="Default select example" v-if="username" id="cabinetSelection" v-model="cabId">
       <option v-for="cabinet in allCabinetsForCurrentDoc" :value="cabinet.cabinetId">{{cabinet.cabinetId}} {{cabinet.description}}</option>
 </select><br/>
 </div><br/>

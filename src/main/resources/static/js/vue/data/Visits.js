@@ -58,8 +58,8 @@ export default {
       </thead>
       <tbody>
         <tr v-for="visit in allVisits">
-          <th scope="row"># {{ visit.visitId }}</th>
-          <td><b>{{ visit.date }}<b/></td>
+          <td># {{ visit.visitId }}</td>
+          <td>{{ visit.date }}</td>
           <td><b># {{ visit.patient.userId }} - <b/> {{ visit.patient.name }} {{ visit.patient.surname }}</td>
           <td><b>{{ visit.doctor.speciality }}<b/> {{ visit.doctor.name }} {{ visit.doctor.surname }}</td>
           <td># {{ visit.cabinet.cabinetId }} - {{ visit.cabinet.description }}</td>

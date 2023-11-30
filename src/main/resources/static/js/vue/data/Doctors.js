@@ -53,15 +53,16 @@ export default {
   <tbody>
     <tr v-for="user in allUsers">
       <template v-if="user?.authorities[0].authority === 'DOCTOR'">
-        <th scope="row"># {{ user.userId }}</th>
-        <th scope="row">{{ user.name }}</th>
-        <th scope="row">{{ user.surname }}</th>
-        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.yearOfBirth }}</th>
-        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.address }}</th>
-        <th scope="row" v-if="userInfo?.auths?.includes('ADMIN')">{{ user.phone }}</th>
-        <th scope="row">{{ user.speciality }}</th>
-        <th scope="row">{{ user.childDoctor }}</th>
-        <th scope="row">{{ user.pricePerVisit }} ua hrv</th>
+        <td># {{ user.userId }}</td>
+        <td><b>{{ user.name }}</b></td>
+        <td><b>{{ user.surname }}</b></td>
+        <td v-if="userInfo?.auths?.includes('ADMIN')">{{ user.yearOfBirth }}</td>
+        <td v-if="userInfo?.auths?.includes('ADMIN')">{{ user.address }}</td>
+        <td v-if="userInfo?.auths?.includes('ADMIN')">{{ user.phone }}</td>
+        <td><b>{{ user.speciality }}</b></td>
+        <td v-if="user.childDoctor"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128578;</p></p></td>
+        <td v-else ><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128532;</p></p></td>
+        <td>{{ user.pricePerVisit }} ua hrv</td>
       </template>
     </tr>
   </tbody>

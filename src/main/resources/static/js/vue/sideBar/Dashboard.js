@@ -8,6 +8,7 @@ import Cabinets from "../data/Cabinets.js";
 import AddNewCabinet from "../addNewData/AddNewCabinet.js";
 import AddNewDoctor from "../addNewData/AddNewDoctor.js";
 import AddNewPatient from "../addNewData/AddNewPatient.js";
+import AddNewAdmin from "../addNewData/AddNewAdmin.js";
 import AddNewAppointment from "../addNewData/AddNewAppointment.js";
 import AddNewMedicine from "../addNewData/AddNewMedicine.js";
 import AddNewProcedure from "../addNewData/AddNewProcedure.js";
@@ -24,6 +25,7 @@ export default {
     AddNewCabinet,
     AddNewDoctor,
     AddNewPatient,
+    AddNewAdmin,
     AddNewAppointment,
     AddNewMedicine,
     AddNewProcedure
@@ -43,6 +45,7 @@ export default {
         { name: "Add New Cabinet", auth: ['ADMIN'] },
         { name: "Add New Doctor", auth: ['ADMIN'] },
         { name: "Add New Patient", auth: ['ADMIN'] },
+        { name: "Add New Admin", auth: ['ADMIN'] },
         { name: "Add New Appointment", auth: ['ADMIN'] },
         { name: "Add New Medicine", auth: ['ADMIN'] },
         { name: "Add New Procedure", auth: ['ADMIN'] }
@@ -80,6 +83,7 @@ export default {
     <add-new-cabinet v-if="activePage === 'Add New Cabinet'"></add-new-cabinet>
     <add-new-doctor v-if="activePage === 'Add New Doctor'"></add-new-doctor>
     <add-new-patient v-if="activePage === 'Add New Patient'"></add-new-patient>
+    <add-new-admin v-if="activePage === 'Add New Admin'"></add-new-admin>
     <add-new-appointment v-if="activePage === 'Add New Appointment'"></add-new-appointment>
     <add-new-medicine v-if="activePage === 'Add New Medicine'"></add-new-medicine>
     <add-new-procedure v-if="activePage === 'Add New Procedure'"></add-new-procedure>

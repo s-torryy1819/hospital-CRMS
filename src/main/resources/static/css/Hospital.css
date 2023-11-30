@@ -189,6 +189,11 @@ a.button:active {
     justify-content: space-between;
 }
 
+.p_turn_items{
+    display: flex;
+    align-items: baseline;
+}
+
 .info_item {
     width: 50vw;
 }

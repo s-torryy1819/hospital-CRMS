@@ -57,7 +57,7 @@ export default {
       </thead>
       <tbody>
         <tr v-for="appointment in allAppointments">
-          <th scope="row"># {{ appointment.doctorAppointmentId }}</th>
+          <td># {{ appointment.doctorAppointmentId }}</td>
           <td>{{ appointment.doctor.name }} {{ appointment.doctor.surname }} - <b>{{ appointment.doctor.speciality }}<b/></td>
           <td>{{ appointment.patient.name }} {{ appointment.patient.surname }}</td>
           <td><b># {{ appointment.cabinet.cabinetId }} - <b/> {{ appointment.cabinet.description }}</td>

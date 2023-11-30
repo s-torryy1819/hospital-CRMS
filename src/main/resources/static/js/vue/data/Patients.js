@@ -38,16 +38,16 @@ export default {
   </thead>
   <tbody>
     <tr v-for="user in allUsers">
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.userId }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.name }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.surname }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.yearOfBirth }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.address }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.phone }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.workAddress }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.disability }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.visitHistoryId }}</th>
-      <th scope="row" v-if="user.authorities[0].authority === 'PATIENT'">{{ user.chronicDiseases }}</th>
+      <td v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.userId }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.name }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.surname }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.yearOfBirth }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.address }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.phone }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.workAddress }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.disability }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.visitHistoryId }}</td>
+      <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.chronicDiseases }}</td>
     </tr>
   </tbody>
 </table>

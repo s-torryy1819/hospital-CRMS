@@ -34,9 +34,9 @@ export default {
       </thead>
       <tbody>
         <tr v-for="cabinet in allCabinets">
-          <th scope="row"># {{ cabinet.cabinetId }}</th>
+          <td># {{ cabinet.cabinetId }}</td>
           <td><b>{{ cabinet.description }}<b/></td>
-          <td><b>{{ cabinet.doctor.speciality }} - <b/> {{ cabinet.doctor.name }} {{ cabinet.doctor.surname }}</td>
+          <td>{{ cabinet.doctor.speciality }} -  {{ cabinet.doctor.name }} {{ cabinet.doctor.surname }}</td>
         </tr>
       </tbody>
     </table>
