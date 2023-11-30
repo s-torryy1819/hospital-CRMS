@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jboss.logging.Logger;
+import org.jboss.logging.Logger.Level;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.javapoet.ClassName;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,6 +52,8 @@ public class MainController {
 
         @Autowired
         private MedicineRepository medicineRepository;
+
+        private static final Logger LOGGER = Logger.getLogger( ClassName.class.getName() );
 
         @GetMapping("/index")
         public ModelAndView getIndex() {
@@ -345,6 +350,7 @@ public class MainController {
                 procedureRepository.save(procedure9);
                 procedureRepository.save(procedure10);
 
+                LOGGER.log( Level.INFO, "Test Data was successfully stored in a database");
                 return new ModelAndView("index");
         }
 
@@ -391,13 +397,11 @@ public class MainController {
                                         Doctor selectedDoc = (Doctor) userDetailsManager.getUserByUsername(name);
                                         this.personName = selectedDoc.getName();
                                         this.surname = selectedDoc.getSurname();
-                                        System.out.println("DOC: " + personName + surname);
                                 }
                                 else if(auths.contains("PATIENT")){
                                         Patient selectedPat = (Patient) userDetailsManager.getUserByUsername(name);
                                         this.personName = selectedPat.getName();
                                         this.surname = selectedPat.getSurname();
-                                        System.out.println("PAT: " + personName + surname);
                                 }
                         }
                 }
