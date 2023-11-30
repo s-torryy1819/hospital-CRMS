@@ -7,11 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jboss.logging.Logger;
-import org.jboss.logging.Logger.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
-import org.springframework.javapoet.ClassName;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +53,7 @@ public class DataController {
     @Autowired
     private SecurityUserDetailsService userDetailsManager;
 
-    private static final Logger LOGGER = Logger.getLogger( ClassName.class.getName() );
+    Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private String resultMessage = "Saved";
 
@@ -71,7 +68,7 @@ public class DataController {
                 Arrays.asList(Authorities.DOCTOR),
                 new Doctor(name, surname, yearOfBirth, address, phone, speciality, Boolean.valueOf(childDoctor),
                         pricePerVisit));
-        LOGGER.log( Level.INFO, "Doctor was saved");
+        LOGGER.info("Doctor was saved");
         return resultMessage;
     }
 
@@ -90,7 +87,7 @@ public class DataController {
                 pricePerVisit);
 
         userRepository.save(doctor);
-        LOGGER.log( Level.INFO, "Doctor data was updated");
+        LOGGER.info("Doctor data was updated");
         return resultMessage;
     }
 
@@ -109,7 +106,7 @@ public class DataController {
                 chronicDiseases);
 
         userRepository.save(patient);
-        LOGGER.log( Level.INFO, "Patient data was updated");
+        LOGGER.info("Patient data was updated");
 
         return resultMessage;
     }
@@ -124,7 +121,7 @@ public class DataController {
                 Arrays.asList(Authorities.PATIENT),
                 new Patient(name, surname, yearOfBirth, address, phone,
                         workAddress, Boolean.valueOf(disability), chronicDiseases));
-        LOGGER.log( Level.INFO, "Patient was saved");
+        LOGGER.info("Patient was saved");
         return resultMessage;
     }
 
@@ -134,7 +131,7 @@ public class DataController {
 
         userDetailsManager.createUser(username, password,
                 Arrays.asList(Authorities.ADMIN));
-        LOGGER.log( Level.INFO, "Admin was saved");
+        LOGGER.info("Admin was saved");
         return resultMessage;
     }
 
@@ -158,7 +155,7 @@ public class DataController {
 
         DoctorAppointment a = new DoctorAppointment(selectedDoc, selectedPatient, selectedCab, LocalDate.parse(date));
         appointmentRepository.save(a);
-        LOGGER.log( Level.INFO, "Appointment was saved");
+        LOGGER.info("Appointment was saved");
         return "Added";
     }
 
@@ -171,7 +168,7 @@ public class DataController {
         Cabinet a = new Cabinet(description, selectedDoc);
 
         cabinetRepository.save(a);
-        LOGGER.log( Level.INFO, "Cabinet was saved");
+        LOGGER.info("Cabinet was saved");
         return "Added";
     }
 
@@ -186,7 +183,7 @@ public class DataController {
                 Boolean.valueOf(needReceipt));
 
         medicineRepository.save(a);
-        LOGGER.log( Level.INFO, "Medicine was saved");
+        LOGGER.info("Medicine was saved");
         return "Added";
     }
 
@@ -205,7 +202,7 @@ public class DataController {
         HealthProcedure a = new HealthProcedure(description, selectedCab, price, selectedDoc);
 
         procedureRepository.save(a);
-        LOGGER.log( Level.INFO, "Procedure was saved");
+        LOGGER.info("Procedure was saved");
         return "Added";
     }
 
@@ -220,7 +217,7 @@ public class DataController {
         Visit a = new Visit(date, disease, purpose, doctor, cabinet, patient);
 
         visitRepository.save(a);
-        LOGGER.log( Level.INFO, "Visit was saved");
+        LOGGER.info("Visit was saved");
         return "Added";
     }
 

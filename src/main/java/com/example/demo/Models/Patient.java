@@ -18,7 +18,7 @@ public class Patient extends User {
     private String phone;
     private String workAddress;
     private Boolean disability;
-    private Integer visitHistoryId;
+    private List<Integer> visitHistoryIdList;
     private String chronicDiseases;
 
     @OneToMany(mappedBy = "patient")
@@ -29,7 +29,7 @@ public class Patient extends User {
     }
 
     public Patient(String name, String surname, String yearOfBirth, String address, String phone, String workAddress,
-            Boolean disability, String chronicDiseases, Integer visitHistoryId) {
+            Boolean disability, String chronicDiseases, List<Integer> visitHistoryIdList) {
         this.name = name;
         this.surname = surname;
         this.yearOfBirth = yearOfBirth;
@@ -38,7 +38,7 @@ public class Patient extends User {
         this.workAddress = workAddress;
         this.disability = disability;
         this.chronicDiseases = chronicDiseases;
-        this.visitHistoryId = visitHistoryId;
+        this.visitHistoryIdList = visitHistoryIdList;
     }
 
     public Patient(String name, String surname, String yearOfBirth, String address, String phone, String workAddress,
@@ -130,12 +130,12 @@ public class Patient extends User {
         this.chronicDiseases = chronicDiseases;
     }
 
-    public Integer getVisitHistoryId() {
-        return visitHistoryId;
+    public List<Integer> getVisitHistoryId() {
+        return visitHistoryIdList;
     }
 
-    public void setVisitHistoryId(Integer visitHistoryId) {
-        this.visitHistoryId = visitHistoryId;
+    public void setVisitHistoryId(List<Integer> visitHistoryIdList) {
+        this.visitHistoryIdList = visitHistoryIdList;
     }
 
 }

@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.jboss.logging.Logger;
-import org.jboss.logging.Logger.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.javapoet.ClassName;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,7 +51,7 @@ public class MainController {
         @Autowired
         private MedicineRepository medicineRepository;
 
-        private static final Logger LOGGER = Logger.getLogger( ClassName.class.getName() );
+        Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         @GetMapping("/index")
         public ModelAndView getIndex() {
@@ -101,32 +99,32 @@ public class MainController {
 
                 // PATIENTS
                 Patient patient1 = new Patient("Elisa", "Schwarz", "2004", "Hansstrasse 10",
-                                "06745637485", "Hauptstrasse 155", false, "No", 1);
+                                "06745637485", "Hauptstrasse 155", false, "No", List.of(1));
                 Patient patient2 = new Patient("Maria", "Muller", "2005", "Strichsstrasse 20", "06123635675",
-                                "Adlershelmstrasse 34", false, "No", 2);
+                                "Adlershelmstrasse 34", false, "No", List.of(2));
                 Patient patient3 = new Patient("Sofia", "Schneider", "1980", "Am Wolfswinkel 23", "02434424242",
-                                "Adenauerallee 47", false, "No", 3);
+                                "Adenauerallee 47", false, "No", List.of(3));
                 Patient patient4 = new Patient("Mark", "Becker", "1998", "Basilikumweg 53", "03552353442",
                                 "Ackerweg 88",
                                 true,
-                                "No", 4);
+                                "No", List.of(4));
                 Patient patient5 = new Patient("Anton", "Wagner", "2000", "Baumannstrasse 34", "06536662323",
                                 "Am Fuchsbau 90",
-                                false, "No", 5);
+                                false, "No", List.of(5));
                 Patient patient6 = new Patient("Chris", "Fischer", "2001", "Ackerweg 65", "07467546344", "Am Grund 1",
                                 true,
-                                "Cardiovascular", 6);
+                                "Cardiovascular", List.of(6));
                 Patient patient7 = new Patient("Paul", "Schmidt", "1975", "Baumschulenweg 76", "05363452232",
                                 "Gundorferteich 15",
-                                false, "No", 7);
+                                false, "No", List.of(7));
                 Patient patient8 = new Patient("Robert", "Schulz", "1986", "Adenauerallee 4", "06756453433",
                                 "Am Wolfswinkel 16",
-                                true, "Cardiovascular", 8);
+                                true, "Cardiovascular", List.of(8));
                 Patient patient9 = new Patient("Christiana", "Meier", "2003", "Am Wolfswinkel 75", "05363123232",
                                 "Ackerweg 1",
-                                false, "No", 9);
+                                false, "No", List.of(9));
                 Patient patient10 = new Patient("Angelina", "Schiller", "2000", "Adenauerallee 39", "05364652232",
-                                "Baumannstrasse 45", false, "No", 10);
+                                "Baumannstrasse 45", false, "No", List.of(10));
 
                 // CABINETS
                 Cabinet cabinet1 = new Cabinet("Emergency", pediatrician);
@@ -350,7 +348,7 @@ public class MainController {
                 procedureRepository.save(procedure9);
                 procedureRepository.save(procedure10);
 
-                LOGGER.log( Level.INFO, "Test Data was successfully stored in a database");
+                LOGGER.info( "Test Data was successfully stored in a database");
                 return new ModelAndView("index");
         }
 
