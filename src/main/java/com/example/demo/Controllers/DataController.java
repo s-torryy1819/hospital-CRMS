@@ -58,6 +58,8 @@ public class DataController {
 
     private static final Logger LOGGER = Logger.getLogger( ClassName.class.getName() );
 
+    private String resultMessage = "Saved";
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addNewDoctor")
     public String addNewDoctor(@RequestParam String username, @RequestParam String password,
@@ -70,7 +72,7 @@ public class DataController {
                 new Doctor(name, surname, yearOfBirth, address, phone, speciality, Boolean.valueOf(childDoctor),
                         pricePerVisit));
         LOGGER.log( Level.INFO, "Doctor was saved");
-        return "Saved";
+        return resultMessage;
     }
 
     @PreAuthorize("hasAuthority('DOCTOR')")
@@ -89,7 +91,7 @@ public class DataController {
 
         userRepository.save(doctor);
         LOGGER.log( Level.INFO, "Doctor data was updated");
-        return "Saved";
+        return resultMessage;
     }
 
     @PreAuthorize("hasAuthority('PATIENT')")
@@ -109,7 +111,7 @@ public class DataController {
         userRepository.save(patient);
         LOGGER.log( Level.INFO, "Patient data was updated");
 
-        return "Saved";
+        return resultMessage;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -123,7 +125,7 @@ public class DataController {
                 new Patient(name, surname, yearOfBirth, address, phone,
                         workAddress, Boolean.valueOf(disability), chronicDiseases));
         LOGGER.log( Level.INFO, "Patient was saved");
-        return "Saved";
+        return resultMessage;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -133,7 +135,7 @@ public class DataController {
         userDetailsManager.createUser(username, password,
                 Arrays.asList(Authorities.ADMIN));
         LOGGER.log( Level.INFO, "Admin was saved");
-        return "Saved";
+        return resultMessage;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
