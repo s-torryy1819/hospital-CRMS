@@ -32,7 +32,7 @@ export default {
           <th scope="col">Price</th>
           <th scope="col">Cabinet</th>
           <th scope="col">Doctor</th>
-          
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +42,10 @@ export default {
           <td>{{ procedure.price }} ua hrv</td>
           <td>{{ procedure.cabinet.cabinetId }} {{ procedure.cabinet.description }}</td>
           <td><b>{{ procedure.doctor.speciality }}<b/> {{ procedure.doctor.name }} {{ procedure.doctor.surname }}</td>
+          <td>
+            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
+            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+          </td>
         </tr>
       </tbody>
     </table>

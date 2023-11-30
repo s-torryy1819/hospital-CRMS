@@ -35,6 +35,7 @@ export default {
       <th scope="col">Disability</th>
       <th scope="col">Visit History Ids</th>
       <th scope="col">Chronic Diseases</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -50,6 +51,10 @@ export default {
       <td v-else-if="user.authorities[0].authority === 'PATIENT' && !user.disability" ><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128578;</p></p></td>
       <td v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.visitHistoryIdList.toString() }}</td>
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.chronicDiseases }}</td>
+      <td>
+        <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
+        <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+      </td>
     </tr>
   </tbody>
 </table>

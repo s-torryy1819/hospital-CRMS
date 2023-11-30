@@ -30,6 +30,7 @@ export default {
           <th scope="col">Cabinet ID</th>
           <th scope="col">Description</th>
           <th scope="col">Doctor</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,10 @@ export default {
           <td># {{ cabinet.cabinetId }}</td>
           <td><b>{{ cabinet.description }}<b/></td>
           <td>{{ cabinet.doctor.speciality }} -  {{ cabinet.doctor.name }} {{ cabinet.doctor.surname }}</td>
+          <td>
+            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
+            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+          </td>
         </tr>
       </tbody>
     </table>

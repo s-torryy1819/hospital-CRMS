@@ -33,6 +33,7 @@ export default {
           <th scope="col">Price</th>
           <th scope="col">Needed receipt</th>
           <th scope="col">Description</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +45,10 @@ export default {
           <td v-if="medicine.needReceipt"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128077;</p></p></td>
           <td v-else><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128076;</p></p></td>
           <td>{{ medicine.description }}</td>
+          <td>
+            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
+            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+          </td>
         </tr>
       </tbody>
     </table>

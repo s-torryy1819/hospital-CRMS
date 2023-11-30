@@ -53,6 +53,7 @@ export default {
           <th scope="col">Patient</th>
           <th scope="col">Cabinet</th>
           <th scope="col">Date</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +63,7 @@ export default {
           <td>{{ appointment.patient.name }} {{ appointment.patient.surname }}</td>
           <td><b># {{ appointment.cabinet.cabinetId }} - <b/> {{ appointment.cabinet.description }}</td>
           <td>{{ appointment.date }}</td>
+          <td><input type="button" class="btn-rounded btn-danger text-white exit_btn"  value="Cancel"></input></td>
         </tr>
       </tbody>
     </table>

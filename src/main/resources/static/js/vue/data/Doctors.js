@@ -48,6 +48,7 @@ export default {
       <th scope="col">Speciality</th>
       <th scope="col">Child Doctor</th>
       <th scope="col">Price Per Visit</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -63,6 +64,10 @@ export default {
         <td v-if="user.childDoctor"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128578;</p></p></td>
         <td v-else ><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128532;</p></p></td>
         <td>{{ user.pricePerVisit }} ua hrv</td>
+        <td>
+          <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
+          <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+        </td>
       </template>
     </tr>
   </tbody>
