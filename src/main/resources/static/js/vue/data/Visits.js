@@ -4,23 +4,25 @@ export default {
   components: {
     axios
   },
+  props: ['userInfo'],
   data() {
     return {
+      userInfo: this.userInfo,
       allVisits: {},
-      userInfo: {},
+      userAuthority: {},
       noVisits: null
     };
   },
   methods: {
     async getAllVisits() {
       const data = await axios.get("http://localhost:8080/userInfo");
-      this.userInfo = data.data.auths[0];
+      this.userAuthority = data.data.auths[0];
 
-      if (this.userInfo == "ADMIN") {
+      if (this.userAuthority == "ADMIN") {
         const response = await axios.get("http://localhost:8080/getAllVisits");
         this.allVisits = response.data;
       }
-      else if (this.userInfo == "DOCTOR" || this.userInfo == "PATIENT") {
+      else if (this.userAuthority == "DOCTOR" || this.userAuthority == "PATIENT") {
         const response = await axios.get("http://localhost:8080/getVisitsForUser");
         this.allVisits = response.data;
       }
@@ -66,7 +68,7 @@ export default {
           <th scope="col">Cabinet</th>
           <th scope="col">Disease</th>
           <th scope="col">Purpose</th>
-          <th scope="col">Actions</th>
+          <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -78,7 +80,7 @@ export default {
           <td># {{ visit.cabinet.cabinetId }} - {{ visit.cabinet.description }}</td>
           <td>{{ visit.disease }}</td>
           <td>{{ visit.purpose }}</td>
-          <td>
+          <td v-if="userInfo?.auths?.includes('ADMIN')">
             <input type="button" @click="deleteVisit(visit.visitId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>
         </tr>

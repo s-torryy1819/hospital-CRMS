@@ -4,8 +4,10 @@ export default {
   components: {
     axios
   },
+  props: ['userInfo'],
   data() {
     return {
+      userInfo: this.userInfo,
       allUsers: {},
     };
   },
@@ -46,7 +48,7 @@ export default {
       <th scope="col">Disability</th>
       <th scope="col">Visit History Ids</th>
       <th scope="col">Chronic Diseases</th>
-      <th scope="col">Actions</th>
+      <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -64,7 +66,7 @@ export default {
       </td>
       <td v-if="user.authorities[0].authority === 'PATIENT'"># {{ user.visitHistoryIdList.toString() }}</td>
       <td v-if="user.authorities[0].authority === 'PATIENT'">{{ user.chronicDiseases }}</td>
-      <td>
+      <td v-if="userInfo?.auths?.includes('ADMIN')">
         <input type="button" @click="deleteUser(user.username)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
       </td>
     </tr>

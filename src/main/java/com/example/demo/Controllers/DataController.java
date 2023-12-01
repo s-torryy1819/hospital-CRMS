@@ -342,8 +342,24 @@ public class DataController {
                 .filter(it -> it.getCabinetId().equals(Integer.valueOf(itemId)))
                 .collect(Collectors.toList()).get(0);
 
+        List<HealthProcedure> item2 = procedureRepository.findAll().stream()
+                .filter(it -> it.getCabinet().getCabinetId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList());
+
+        List<DoctorAppointment> item3 = appointmentRepository.findAll().stream()
+                .filter(it -> it.getCabinet().getCabinetId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList());
+
         item.setAppointments(null);
         item.setDoctor(null);
+
+        if (!item2.isEmpty()) {
+            procedureRepository.deleteAll(item2);
+        }
+        if (!item2.isEmpty()) {
+            appointmentRepository.deleteAll(item3);
+        }
+
         cabinetRepository.delete(item);
 
         LOGGER.info("Cabinet was deleted");

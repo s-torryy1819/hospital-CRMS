@@ -4,8 +4,10 @@ export default {
   components: {
     axios
   },
+  props: ['userInfo'],
   data() {
     return {
+      userInfo: this.userInfo,
       allProcedures: {},
       edit_mode: false,
     };
@@ -45,7 +47,7 @@ export default {
           <th scope="col">Price</th>
           <th scope="col">Cabinet</th>
           <th scope="col">Doctor</th>
-          <th scope="col">Actions</th>
+          <th scope="col" v-if="userInfo?.auths?.includes('ADMIN')">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -55,7 +57,7 @@ export default {
           <td>{{ procedure.price }} ua hrv</td>
           <td>{{ procedure.cabinet.cabinetId }} {{ procedure.cabinet.description }}</td>
           <td><b>{{ procedure.doctor.speciality }}<b/> {{ procedure.doctor.name }} {{ procedure.doctor.surname }}</td>
-          <td>
+          <td v-if="userInfo?.auths?.includes('ADMIN')">
             <input type="button" @click="deleteProcedure(procedure.procedureId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>
         </tr>
