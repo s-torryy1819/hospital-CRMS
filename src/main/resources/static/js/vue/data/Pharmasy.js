@@ -14,6 +14,18 @@ export default {
       const response = await axios.get("http://localhost:8080/getAllMedicines");
       this.allMedicines = response.data;
     },
+    deleteMedicine(appId) {
+
+      axios.post(`/deleteMedicine`, null, {
+        params: {
+          itemId: appId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
+    },
   },
   beforeMount() {
     this.getAllMedicines();
@@ -39,15 +51,14 @@ export default {
       <tbody>
         <tr v-for="medicine in allMedicines">
           <td># {{ medicine.medicineId }}</td>
-          <td><b>{{ medicine.nameOfMedicine }}<b/></td>
+          <td><b>{{ medicine.nameOfMedicine }}</b></td>
           <td>{{ medicine.availableInStock }}</td>
           <td>{{ medicine.price }} ua hrv</td>
           <td v-if="medicine.needReceipt"><p class="p_turn_items">Yes <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128077;</p></p></td>
           <td v-else><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128076;</p></p></td>
           <td>{{ medicine.description }}</td>
           <td>
-            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
-            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+            <input type="button" @click="deleteMedicine(medicine.medicineId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>
         </tr>
       </tbody>

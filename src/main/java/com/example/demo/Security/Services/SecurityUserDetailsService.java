@@ -43,6 +43,11 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     }
 
+    public void deleteUser(final String username) {
+        User user = getUserByUsername(username);
+        userRepository.delete(user);
+    }
+
     public User getUserByUsername(final String username) {
         return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not present"));

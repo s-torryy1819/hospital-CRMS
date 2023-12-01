@@ -5,6 +5,7 @@ import Procedures from "../data/Procedures.js";
 import Visits from "../data/Visits.js";
 import Doctors from "../data/Doctors.js";
 import Cabinets from "../data/Cabinets.js";
+import Admins from "../data/Admins.js";
 import AddNewCabinet from "../addNewData/AddNewCabinet.js";
 import AddNewDoctor from "../addNewData/AddNewDoctor.js";
 import AddNewPatient from "../addNewData/AddNewPatient.js";
@@ -20,6 +21,7 @@ export default {
     Pharmasy,
     Procedures,
     Visits,
+    Admins,
     Doctors,
     Cabinets,
     AddNewCabinet,
@@ -41,6 +43,7 @@ export default {
         { name: "Procedures", auth: [] },
         { name: "Visits", auth: [] },
         { name: "Doctors", auth: [] },
+        { name: "Admins", auth: ['ADMIN'] },
         { name: "Cabinets", auth: [] },
         { name: "Add New Cabinet", auth: ['ADMIN'] },
         { name: "Add New Doctor", auth: ['ADMIN'] },
@@ -79,6 +82,7 @@ export default {
     <procedures v-if="activePage === 'Procedures'"></procedures>
     <visits v-if="activePage === 'Visits'"></visits>
     <doctors v-if="activePage === 'Doctors'"></doctors>
+    <admins v-if="activePage === 'Admins'"></admins>
     <cabinets v-if="activePage === 'Cabinets'"></cabinets>
     <add-new-cabinet v-if="activePage === 'Add New Cabinet'"></add-new-cabinet>
     <add-new-doctor v-if="activePage === 'Add New Doctor'"></add-new-doctor>

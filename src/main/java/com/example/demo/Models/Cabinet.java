@@ -34,6 +34,10 @@ public class Cabinet {
         // FOR SPRING | DO NOT DELETE
     }
 
+    public void setAppointments(List<DoctorAppointment> appointments) {
+        this.appointments = appointments;
+    }
+
     public Cabinet(String description, Doctor doctor) {
         Description = description;
         Doctor = doctor;

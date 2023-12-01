@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.Exceptions.DoctorException;
 import com.example.demo.Models.Cabinet;
 import com.example.demo.Models.Doctor;
 import com.example.demo.Models.DoctorAppointment;
@@ -54,47 +55,46 @@ public class MainController {
         Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         @GetMapping("/index")
-        public ModelAndView getIndex() {
+        public ModelAndView getIndex() throws DoctorException {
 
                 // DOCTORS
                 // 1
                 Doctor practicioner = new Doctor("Mary", "Buchner", "1990", "Hansstrasse 2", "067847988",
                                 "General practitioner", false,
-                                "550", getTime(("2023-10-23"), ("2023-10-22")),
-                                getTime(("2023-10-24"), ("2023-11-01")));
+                                "550", getTime(("2023-10-24"), ("2023-11-01")));
                 // 2
                 Doctor gynecologist = new Doctor("Kathrine", "Schneider", "1991",
                                 "Prinzipalmarkt 5", "057362727", "Gynecologist",
-                                false, "1000", getTime(("2023-11-15"), ("2023-11-10")),
+                                false, "1000",
                                 getTime(("2023-10-25")));
                 // 3
                 Doctor oncologist = new Doctor("Peter", "Eckhardt", "1987", "Augustaanlage 44",
                                 "076453423", "Oncologist", false,
-                                "670", getTime(("2023-10-23"), ("2023-10-22")),
+                                "670",
                                 getTime(("2023-10-30"), ("2023-10-26"), ("2023-11-04")));
                 // 4
                 Doctor neurologist = new Doctor("Sofia", "Muller", "1989", "Basilikumweg 100",
                                 "058376736", "Neurologist", true,
-                                "985", getTime(("2023-10-23"), ("2023-10-22")),
-                                getTime(("2023-10-24"), ("2023-11-01")));
+                                "985",
+                                getTime(("2023-10-24"), ("2023-11-02")));
                 // 5
                 Doctor medical_eneticist = new Doctor("Nelly", "Meier", "2000", "Baumannstrasse 65", "053534234",
-                                "Medical Geneticist", false, "564", getTime(("2023-10-23"), ("2023-10-22")),
-                                getTime(("2023-10-24"), ("2023-11-01")));
+                                "Medical Geneticist", false, "564",
+                                getTime(("2023-10-24"), ("2023-11-03")));
                 // 6
                 Doctor ophthalmologist = new Doctor("Natan", "Schwab", "1998", "Ackerweg 76",
                                 "064553454", "Ophthalmologist",
-                                true, "787", getTime(("2023-10-23"), ("2023-10-22")),
-                                getTime(("2023-10-24"), ("2023-11-01")));
+                                true, "787",
+                                getTime(("2023-10-24"), ("2023-11-15")));
                 // 7
                 Doctor pathologist = new Doctor("Markus", "Hoffmann", "1999", "Im Winkel 76",
                                 "063453321", "Pathologist", false,
-                                "400", getTime(("2023-10-23"), ("2023-10-22")),
-                                getTime(("2023-10-24"), ("2023-11-01")));
+                                "400",
+                                getTime(("2023-10-26"), ("2023-11-01")));
                 // 8
                 Doctor pediatrician = new Doctor("Ann", "Schmidt", "1979", "Vulkanstrasse 89",
                                 "099787867", "Pediatrician", true,
-                                "600", getTime(("2023-10-23"), ("2023-10-22")),
+                                "600",
                                 getTime(("2023-10-24"), ("2023-11-01")));
 
                 // PATIENTS
@@ -197,38 +197,67 @@ public class MainController {
 
                 // APPOINTMENTS
                 appointmentRepository.save(new DoctorAppointment(pediatrician, patient1,
-                                cabinet1, LocalDate.parse("2023-10-22")));
+                                cabinet1, LocalDate.now().plusDays(1)));
+                pediatrician.setNewAppointmentDate(LocalDate.now().plusDays(1));
+
                 appointmentRepository.save(new DoctorAppointment(medical_eneticist, patient2,
-                                cabinet3, LocalDate.parse("2023-10-23")));
+                                cabinet3, LocalDate.now().plusDays(2)));
+                medical_eneticist.setNewAppointmentDate(LocalDate.now().plusDays(2));
+
                 appointmentRepository.save(new DoctorAppointment(neurologist, patient3,
-                                cabinet4, LocalDate.parse("2023-11-05")));
+                                cabinet4, LocalDate.now().plusDays(3)));
+                neurologist.setNewAppointmentDate(LocalDate.now().plusDays(3));
+
                 appointmentRepository.save(new DoctorAppointment(pediatrician, patient4,
-                                cabinet11, LocalDate.parse("2023-10-25")));
+                                cabinet11, LocalDate.now().plusDays(4)));
+                pediatrician.setNewAppointmentDate(LocalDate.now().plusDays(4));
+
                 appointmentRepository.save(new DoctorAppointment(ophthalmologist, patient5,
-                                cabinet6, LocalDate.parse("2023-11-15")));
+                                cabinet6, LocalDate.now().plusDays(5)));
+                ophthalmologist.setNewAppointmentDate(LocalDate.now().plusDays(5));
+
                 appointmentRepository.save(new DoctorAppointment(pediatrician, patient6,
-                                cabinet9, LocalDate.parse("2023-11-10")));
+                                cabinet9, LocalDate.now().plusDays(2)));
+                pediatrician.setNewAppointmentDate(LocalDate.now().plusDays(2));
+
                 appointmentRepository.save(new DoctorAppointment(gynecologist, patient5,
-                                cabinet7, LocalDate.parse("2023-10-25")));
+                                cabinet7, LocalDate.now().plusDays(3)));
+                gynecologist.setNewAppointmentDate(LocalDate.now().plusDays(3));
+
                 appointmentRepository.save(new DoctorAppointment(practicioner, patient7,
-                                cabinet5, LocalDate.parse("2023-11-01")));
+                                cabinet5, LocalDate.now().plusDays(4)));
+                practicioner.setNewAppointmentDate(LocalDate.now().plusDays(4));
+
                 appointmentRepository.save(new DoctorAppointment(neurologist, patient4,
-                                cabinet4, LocalDate.parse("2023-11-02")));
+                                cabinet4, LocalDate.now().plusDays(5)));
+                neurologist.setNewAppointmentDate(LocalDate.now().plusDays(5));
+
                 appointmentRepository.save(new DoctorAppointment(oncologist, patient7,
-                                cabinet8, LocalDate.parse("2023-10-30")));
+                                cabinet8, LocalDate.now().plusDays(6)));
+                oncologist.setNewAppointmentDate(LocalDate.now().plusDays(6));
+
                 appointmentRepository.save(new DoctorAppointment(oncologist, patient6,
-                                cabinet8, LocalDate.parse("2023-10-26")));
+                                cabinet8, LocalDate.now().plusDays(7)));
+                oncologist.setNewAppointmentDate(LocalDate.now().plusDays(7));
+
                 appointmentRepository.save(new DoctorAppointment(medical_eneticist, patient3,
-                                cabinet3, LocalDate.parse("2023-11-03")));
+                                cabinet3, LocalDate.now().plusDays(8)));
+                medical_eneticist.setNewAppointmentDate(LocalDate.now().plusDays(8));
+
                 appointmentRepository.save(new DoctorAppointment(practicioner, patient2,
-                                cabinet5, LocalDate.parse("2023-10-24")));
+                                cabinet5, LocalDate.now().plusDays(1)));
+                practicioner.setNewAppointmentDate(LocalDate.now().plusDays(1));
+
                 appointmentRepository.save(new DoctorAppointment(pathologist, patient2,
-                                cabinet2, LocalDate.parse("2023-10-26")));
+                                cabinet2, LocalDate.now().plusDays(2)));
+                pathologist.setNewAppointmentDate(LocalDate.now().plusDays(2));
+
                 appointmentRepository.save(new DoctorAppointment(oncologist, patient2,
-                                cabinet8, LocalDate.parse("2023-11-04")));
+                                cabinet8, LocalDate.now().plusDays(3)));
+                oncologist.setNewAppointmentDate(LocalDate.now().plusDays(3));
 
                 // VISITS
-                Visit visit1 = new Visit(LocalDate.parse("2023-12-01"), "Arenavirus", "Cure the virus", practicioner,
+                Visit visit1 = new Visit(LocalDate.parse("2023-11-01"), "Arenavirus", "Cure the virus", practicioner,
                                 cabinet5,
                                 patient1);
                 Visit visit2 = new Visit(LocalDate.parse("2023-11-15"), "Hepatitis A", "Diagnose the disease",
@@ -256,11 +285,11 @@ public class MainController {
                                 ophthalmologist,
                                 cabinet6,
                                 patient8);
-                Visit visit9 = new Visit(LocalDate.parse("2023-12-17"), "Cerebral Aneurysm", "Regular check",
+                Visit visit9 = new Visit(LocalDate.parse("2023-10-17"), "Cerebral Aneurysm", "Regular check",
                                 medical_eneticist,
                                 cabinet3,
                                 patient9);
-                Visit visit10 = new Visit(LocalDate.parse("2023-12-10"), "Cystic fibrosis", "Cure the virus",
+                Visit visit10 = new Visit(LocalDate.parse("2023-10-10"), "Cystic fibrosis", "Cure the virus",
                                 gynecologist,
                                 cabinet7,
                                 patient10);
@@ -348,7 +377,7 @@ public class MainController {
                 procedureRepository.save(procedure9);
                 procedureRepository.save(procedure10);
 
-                LOGGER.info( "Test Data was successfully stored in a database");
+                LOGGER.info("Test Data was successfully stored in a database");
                 return new ModelAndView("index");
         }
 
@@ -391,12 +420,11 @@ public class MainController {
                                 this.auths = authentication.getAuthorities().stream().map(auth -> auth.getAuthority())
                                                 .collect(Collectors.toList());
 
-                                if(auths.contains("DOCTOR")){
+                                if (auths.contains("DOCTOR")) {
                                         Doctor selectedDoc = (Doctor) userDetailsManager.getUserByUsername(name);
                                         this.personName = selectedDoc.getName();
                                         this.surname = selectedDoc.getSurname();
-                                }
-                                else if(auths.contains("PATIENT")){
+                                } else if (auths.contains("PATIENT")) {
                                         Patient selectedPat = (Patient) userDetailsManager.getUserByUsername(name);
                                         this.personName = selectedPat.getName();
                                         this.surname = selectedPat.getSurname();
@@ -435,8 +463,6 @@ public class MainController {
                 public void setSurname(String surname) {
                         this.surname = surname;
                 }
-
-                
 
         }
 

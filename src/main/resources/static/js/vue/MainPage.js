@@ -169,7 +169,9 @@ export default {
                         <img src="/images/woman_doctor.png" alt="Doctor"  style="width: 13vw;" class="woman_doctor_img">
                     </div>
                     <div class="greeting">
-                        <h4 class="text-light ">Hello, {{ userInfo.personName }} {{ userInfo.surname }}</h4>
+                        <h4 v-if="userInfo?.auths?.includes('PATIENT')" class="text-light ">Hello, {{ userInfo.personName }} {{ userInfo.surname }}</h4>
+                        <h4 v-if="userInfo?.auths?.includes('DOCTOR')" class="text-light ">Hello, {{ userInfo.personName }} {{ userInfo.surname }}</h4>
+                        <h4 v-if="userInfo?.auths?.includes('ADMIN')" class="text-light ">Hello, {{ userInfo.name }}</h4>
                         <h3 class="text-light ">This is "Harmony Hospital"</h3>
                         <h4 class="text-light ">Management System</h4>
                     </div>

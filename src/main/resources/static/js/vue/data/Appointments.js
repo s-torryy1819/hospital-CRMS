@@ -16,16 +16,29 @@ export default {
       const data = await axios.get("http://localhost:8080/userInfo");
       this.userInfo = data.data.auths[0];
 
-      if(this.userInfo == "ADMIN"){
+      if (this.userInfo == "ADMIN") {
         const response = await axios.get("http://localhost:8080/getAllAppointments");
         this.allAppointments = response.data;
       }
-      else if(this.userInfo == "DOCTOR" || this.userInfo == "PATIENT"){
+      else if (this.userInfo == "DOCTOR" || this.userInfo == "PATIENT") {
         const response = await axios.get("http://localhost:8080/getAppointmentsForUser");
         this.allAppointments = response.data;
       }
 
       this.noAppointments = (this.allAppointments.length == 0);
+    },
+
+    deleteAppointment(appId) {
+
+      axios.post(`/deleteAppointment`, null, {
+        params: {
+          appointmentId: appId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
     },
   },
   beforeMount() {
@@ -63,7 +76,7 @@ export default {
           <td>{{ appointment.patient.name }} {{ appointment.patient.surname }}</td>
           <td><b># {{ appointment.cabinet.cabinetId }} - <b/> {{ appointment.cabinet.description }}</td>
           <td>{{ appointment.date }}</td>
-          <td><input type="button" class="btn-rounded btn-danger text-white exit_btn"  value="Cancel"></input></td>
+          <td><input type="button" @click="deleteAppointment(appointment.doctorAppointmentId)" class="btn-rounded btn-danger text-white exit_btn"  value="Cancel"></input></td>
         </tr>
       </tbody>
     </table>

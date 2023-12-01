@@ -72,6 +72,10 @@ public class Patient extends User {
         this.chronicDiseases = chronicDiseases;
     }
 
+    public void setAppointments(List<DoctorAppointment> appointments) {
+        this.appointments = appointments;
+    }
+
     public String getName() {
         return name;
     }

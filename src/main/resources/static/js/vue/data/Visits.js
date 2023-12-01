@@ -1,37 +1,49 @@
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm";
 
 export default {
-    components: {
-        axios
-    },
-    data() {
-        return {
-            allVisits: {},
-            userInfo: {},
-            noVisits: null
-        };
-    },
-    methods: {
-        async getAllVisits() {
-            const data = await axios.get("http://localhost:8080/userInfo");
-            this.userInfo = data.data.auths[0];
+  components: {
+    axios
+  },
+  data() {
+    return {
+      allVisits: {},
+      userInfo: {},
+      noVisits: null
+    };
+  },
+  methods: {
+    async getAllVisits() {
+      const data = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data.data.auths[0];
 
-            if(this.userInfo == "ADMIN"){
-              const response = await axios.get("http://localhost:8080/getAllVisits");
-              this.allVisits = response.data;
-            }
-            else if(this.userInfo == "DOCTOR" || this.userInfo == "PATIENT"){
-              const response = await axios.get("http://localhost:8080/getVisitsForUser");
-              this.allVisits = response.data;
-            }
+      if (this.userInfo == "ADMIN") {
+        const response = await axios.get("http://localhost:8080/getAllVisits");
+        this.allVisits = response.data;
+      }
+      else if (this.userInfo == "DOCTOR" || this.userInfo == "PATIENT") {
+        const response = await axios.get("http://localhost:8080/getVisitsForUser");
+        this.allVisits = response.data;
+      }
 
-            this.noVisits = (this.allVisits.length == 0);
-        },
+      this.noVisits = (this.allVisits.length == 0);
     },
-    beforeMount() {
-        this.getAllVisits();
+    deleteVisit(appId) {
+
+      axios.post(`/deleteVisit`, null, {
+        params: {
+          itemId: appId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
     },
-    template: `
+  },
+  beforeMount() {
+    this.getAllVisits();
+  },
+  template: `
   <br/><br/>
       <div class="turn_items appointments_container">
       <div>
@@ -54,6 +66,7 @@ export default {
           <th scope="col">Cabinet</th>
           <th scope="col">Disease</th>
           <th scope="col">Purpose</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -65,6 +78,9 @@ export default {
           <td># {{ visit.cabinet.cabinetId }} - {{ visit.cabinet.description }}</td>
           <td>{{ visit.disease }}</td>
           <td>{{ visit.purpose }}</td>
+          <td>
+            <input type="button" @click="deleteVisit(visit.visitId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -8,13 +8,13 @@ export default {
   data() {
     return {
       userInfo: this.userInfo,
-      allUsers: {},
+      allDoctors: {},
     };
   },
   methods: {
-    async getAllUsers() {
-      const response = await axios.get("http://localhost:8080/getAllUsers");
-      this.allUsers = response.data;
+    async getAllDoctors() {
+      const response = await axios.get("http://localhost:8080/getAllDoctors");
+      this.allDoctors = response.data;
     },
     includesAuth(page) {
       if (this.userInfo?.auths)
@@ -23,9 +23,22 @@ export default {
             return true
       return false
     },
+
+    deleteUser(dusername) {
+
+      axios.post(`/deleteDoctor`, null, {
+        params: {
+          username: dusername
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
+    },
   },
   beforeMount() {
-    this.getAllUsers();
+    this.getAllDoctors();
   },
   template: `
       <br/>
@@ -52,8 +65,7 @@ export default {
     </tr>
   </thead>
   <tbody>
-    <tr v-for="user in allUsers">
-      <template v-if="user?.authorities[0].authority === 'DOCTOR'">
+    <tr v-for="user in allDoctors">
         <td># {{ user.userId }}</td>
         <td><b>{{ user.name }}</b></td>
         <td><b>{{ user.surname }}</b></td>
@@ -65,10 +77,8 @@ export default {
         <td v-else ><p class="p_turn_items">No <p style="font-size:25px; box-shadow: #fffaea 0px 0px 100px inset; border-radius: 5vw; margin-left: 0.6vw;">&#128532;</p></p></td>
         <td>{{ user.pricePerVisit }} ua hrv</td>
         <td>
-          <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
-          <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+          <input type="button" @click="deleteUser(user.username)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
         </td>
-      </template>
     </tr>
   </tbody>
 </table>

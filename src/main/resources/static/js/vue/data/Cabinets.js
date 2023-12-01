@@ -14,6 +14,18 @@ export default {
       const response = await axios.get("http://localhost:8080/getAllCabinets");
       this.allCabinets = response.data;
     },
+    deleteCabinet(entityId) {
+
+      axios.post(`/deleteCabinet`, null, {
+        params: {
+          itemId: entityId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
+    },
   },
   beforeMount() {
     this.getAllCabinets();
@@ -39,8 +51,7 @@ export default {
           <td><b>{{ cabinet.description }}<b/></td>
           <td>{{ cabinet.doctor.speciality }} -  {{ cabinet.doctor.name }} {{ cabinet.doctor.surname }}</td>
           <td>
-            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
-            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+            <input type="button" @click="deleteCabinet(cabinet.cabinetId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>
         </tr>
       </tbody>

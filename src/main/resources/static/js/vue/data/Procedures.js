@@ -7,12 +7,25 @@ export default {
   data() {
     return {
       allProcedures: {},
+      edit_mode: false,
     };
   },
   methods: {
     async getAllProcedures() {
       const response = await axios.get("http://localhost:8080/getAllProcedures");
       this.allProcedures = response.data;
+    },
+    deleteProcedure(appId) {
+
+      axios.post(`/deleteProcedure`, null, {
+        params: {
+          itemId: appId
+        }
+      })
+        .then(response => response.status)
+        .catch(err => console.warn(err));
+
+      window.location.reload();
     },
   },
   beforeMount() {
@@ -21,7 +34,7 @@ export default {
   template: `
   <br/><br/>
       <div class="turn_items appointments_container">
-      <div class="personnel_container">
+      <div class="">
       <img src="/images/personal.png" alt="Calendar"  style="width: 20vw;">
     </div>
       <table class="table table-bordered table-hover">
@@ -43,8 +56,7 @@ export default {
           <td>{{ procedure.cabinet.cabinetId }} {{ procedure.cabinet.description }}</td>
           <td><b>{{ procedure.doctor.speciality }}<b/> {{ procedure.doctor.name }} {{ procedure.doctor.surname }}</td>
           <td>
-            <input type="button" class="btn-rounded btn-warning text-white exit_btn" value="Edit"></input>
-            <input type="button" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
+            <input type="button" @click="deleteProcedure(procedure.procedureId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>
         </tr>
       </tbody>

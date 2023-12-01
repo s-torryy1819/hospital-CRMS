@@ -221,6 +221,156 @@ public class DataController {
         return "Added";
     }
 
+    @PostMapping(path = "/deletePatient")
+    public String deletePatient(@RequestParam String username) {
+
+        Patient patient = (Patient) userDetailsManager.getUserByUsername(username);
+
+        patient.setVisitHistoryIdList(null);
+        patient.setAppointments(null);
+        patient.setAuths(null);
+
+        List<Visit> visits = getAllVisits().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+        List<DoctorAppointment> appointments = getAllAppointments().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+
+        appointmentRepository.deleteAll(appointments);
+        visitRepository.deleteAll(visits);
+
+        userDetailsManager.deleteUser(username);
+
+        LOGGER.info("Patient was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteDoctor")
+    public String deleteDoctor(@RequestParam String username) {
+
+        Doctor doctor = (Doctor) userDetailsManager.getUserByUsername(username);
+
+        doctor.setCabinets(null);
+        doctor.setAppointments(null);
+        doctor.setAuths(null);
+
+        List<Cabinet> cabinets = getAllCabinets().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+        List<Visit> visits = getAllVisits().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+        List<HealthProcedure> procedures = getAllProcedures().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+        List<DoctorAppointment> appointments = getAllAppointments().stream()
+                .filter(cab -> cab.getDoctor().getUsername().equals(username))
+                .collect(Collectors.toList());
+
+        appointmentRepository.deleteAll(appointments);
+        procedureRepository.deleteAll(procedures);
+        visitRepository.deleteAll(visits);
+        cabinetRepository.deleteAll(cabinets);
+
+        userDetailsManager.deleteUser(username);
+
+        LOGGER.info("Doctor was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteAdmin")
+    public String deleteAdmin(@RequestParam String username) {
+
+        User admin = userDetailsManager.getUserByUsername(username);
+        admin.setAuths(null);
+
+        userDetailsManager.deleteUser(username);
+
+        LOGGER.info("Admin was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteMedicine")
+    public String deleteMedicine(@RequestParam String itemId) {
+
+        Medicine item = medicineRepository.findAll().stream()
+                .filter(it -> it.getMedicineId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList()).get(0);
+
+        medicineRepository.delete(item);
+
+        LOGGER.info("Medicine was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteProcedure")
+    public String deleteProcedure(@RequestParam String itemId) {
+
+        HealthProcedure item = procedureRepository.findAll().stream()
+                .filter(it -> it.getProcedureId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList()).get(0);
+
+        item.setCabinet(null);
+        item.setDoctor(null);
+        procedureRepository.delete(item);
+
+        LOGGER.info("HealthProcedure was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteVisit")
+    public String deleteVisit(@RequestParam String itemId) {
+
+        Visit item = visitRepository.findAll().stream()
+                .filter(it -> it.getVisitId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList()).get(0);
+
+        item.setPatient(null);
+        item.setDoctor(null);
+        item.setCabinet(null);
+        visitRepository.delete(item);
+
+        LOGGER.info("Visit was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteCabinet")
+    public String deleteCabinet(@RequestParam String itemId) {
+
+        Cabinet item = cabinetRepository.findAll().stream()
+                .filter(it -> it.getCabinetId().equals(Integer.valueOf(itemId)))
+                .collect(Collectors.toList()).get(0);
+
+        item.setAppointments(null);
+        item.setDoctor(null);
+        cabinetRepository.delete(item);
+
+        LOGGER.info("Cabinet was deleted");
+        return "Deleted";
+    }
+
+    @PostMapping(path = "/deleteAppointment")
+    public String deleteAppointment(@RequestParam String appointmentId) throws DoctorException {
+
+        DoctorAppointment appToDelete = appointmentRepository.findAll().stream()
+                .filter(app -> app.getDoctorAppointmentId().equals(Integer.valueOf(appointmentId)))
+                .collect(Collectors.toList()).get(0);
+
+        Doctor doctor = (Doctor) userDetailsManager.getUserByUsername(appToDelete.getDoctor().getUsername());
+
+        appToDelete.setCabinet(null);
+        appToDelete.setDoctor(null);
+        appToDelete.setPatient(null);
+
+        doctor.deleteAppointmentDate(appToDelete.getDate());
+
+        appointmentRepository.delete(appToDelete);
+
+        LOGGER.info("Appointment was cancelled");
+        return "Cancelled";
+    }
+
     @GetMapping(path = "/getAllPatients")
     public List<User> getAllPatients() {
         List<User> list = userRepository.findAll();
@@ -249,7 +399,18 @@ public class DataController {
         List<User> newList = new ArrayList<>();
         for (User user : list) {
             if (user.getAuths().contains(Authorities.DOCTOR)) {
-                user.setPassword(null);
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
+
+    @GetMapping(path = "/getAllAdmins")
+    public List<User> getAllAdmins() {
+        List<User> list = userRepository.findAll();
+        List<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getAuths().contains(Authorities.ADMIN)) {
                 newList.add(user);
             }
         }

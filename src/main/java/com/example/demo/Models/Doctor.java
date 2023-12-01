@@ -28,11 +28,13 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy = "Doctor")
     List<Cabinet> cabinets = new ArrayList<>();
+
     @OneToMany(mappedBy = "doctor")
     List<DoctorAppointment> appointments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<LocalDate> availableTime;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<LocalDate> blockedTime;
 
@@ -52,6 +54,20 @@ public class Doctor extends User {
         this.childDoctor = childDoctor;
         this.pricePerVisit = pricePerVisit;
         this.availableTime = availableTime;
+        this.blockedTime = blockedTime;
+    }
+
+    public Doctor(String name, String surname, String yearOfBirth, String address, String phone,
+            String speciality, Boolean childDoctor, String pricePerVisit, List<LocalDate> blockedTime) {
+        this.name = name;
+        this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.speciality = speciality;
+        this.childDoctor = childDoctor;
+        this.pricePerVisit = pricePerVisit;
+        this.availableTime = getAvailableTimeForNewDoc();
         this.blockedTime = blockedTime;
     }
 
@@ -95,6 +111,9 @@ public class Doctor extends User {
 
         availableTime.add(date);
         blockedTime.remove(date);
+
+        Collections.sort(availableTime);
+        Collections.sort(blockedTime);
         return true;
     }
 
@@ -121,6 +140,14 @@ public class Doctor extends User {
         this.speciality = speciality;
         this.childDoctor = childDoctor;
         this.pricePerVisit = pricePerVisit;
+    }
+
+    public void setCabinets(List<Cabinet> cabinets) {
+        this.cabinets = cabinets;
+    }
+
+    public void setAppointments(List<DoctorAppointment> appointments) {
+        this.appointments = appointments;
     }
 
     public String getName() {
