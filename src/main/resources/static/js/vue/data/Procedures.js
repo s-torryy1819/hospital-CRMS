@@ -4,10 +4,9 @@ export default {
   components: {
     axios
   },
-  props: ['userInfo'],
   data() {
     return {
-      userInfo: this.userInfo,
+      userInfo: {},
       allProcedures: {},
       edit_mode: false,
     };
@@ -16,6 +15,10 @@ export default {
     async getAllProcedures() {
       const response = await axios.get("http://localhost:8080/getAllProcedures");
       this.allProcedures = response.data;
+    },
+    async getUserInfo() {
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
     },
     deleteProcedure(appId) {
 
@@ -31,6 +34,7 @@ export default {
     },
   },
   beforeMount() {
+    this.getUserInfo();
     this.getAllProcedures();
   },
   template: `

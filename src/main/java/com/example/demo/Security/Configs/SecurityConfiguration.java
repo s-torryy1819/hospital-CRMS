@@ -58,16 +58,3 @@ public class SecurityConfiguration {
     }
 
 }
-
-// Permissions:
-// DOCTOR:
-// my doctor card, my appointments, pharmasy data, my appointments for
-// procedures, other doctors (list), list of cabinets, my cabinet,
-
-// Admin:
-// All appointments, all patients -> their visit history, all doctors, all
-// pharmasy data, all procedures, all cabinets, add new (all of that)
-
-// Patient:
-// My patient card, my appointments, my visit history, my procedures, pharmasy
-// data, all cabinets, all doctors

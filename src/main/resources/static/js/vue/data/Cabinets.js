@@ -4,10 +4,9 @@ export default {
   components: {
     axios
   },
-  props: ['userInfo'],
   data() {
     return {
-      userInfo: this.userInfo,
+      userInfo: {},
       allCabinets: {},
     };
   },
@@ -15,6 +14,10 @@ export default {
     async getAllCabinets() {
       const response = await axios.get("http://localhost:8080/getAllCabinets");
       this.allCabinets = response.data;
+    },
+    async getUserInfo() {
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
     },
     deleteCabinet(entityId) {
 
@@ -30,6 +33,7 @@ export default {
     },
   },
   beforeMount() {
+    this.getUserInfo();
     this.getAllCabinets();
   },
   template: `
@@ -51,7 +55,7 @@ export default {
         <tr v-for="cabinet in allCabinets">
           <td># {{ cabinet.cabinetId }}</td>
           <td><b>{{ cabinet.description }}<b/></td>
-          <td>{{ cabinet.doctor.speciality }} -  {{ cabinet.doctor.name }} {{ cabinet.doctor.surname }}</td>
+          <td>{{ cabinet.doctor?.speciality }} -  {{ cabinet.doctor?.name }} {{ cabinet.doctor?.surname }}</td>
           <td v-if="userInfo?.auths?.includes('ADMIN')">
             <input type="button" @click="deleteCabinet(cabinet.cabinetId)" class="btn-rounded btn-danger text-white exit_btn" value="Delete"></input>
           </td>

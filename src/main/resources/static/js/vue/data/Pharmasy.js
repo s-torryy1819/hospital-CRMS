@@ -4,10 +4,9 @@ export default {
   components: {
     axios
   },
-  props: ['userInfo'],
   data() {
     return {
-      userInfo: this.userInfo,
+      userInfo: {},
       allMedicines: {},
     };
   },
@@ -15,6 +14,10 @@ export default {
     async getAllMedicines() {
       const response = await axios.get("http://localhost:8080/getAllMedicines");
       this.allMedicines = response.data;
+    },
+    async getUserInfo() {
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
     },
     deleteMedicine(appId) {
 
@@ -30,6 +33,7 @@ export default {
     },
   },
   beforeMount() {
+    this.getUserInfo();
     this.getAllMedicines();
   },
   template: `

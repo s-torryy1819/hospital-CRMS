@@ -4,10 +4,9 @@ export default {
   components: {
     axios
   },
-  props: ['userInfo'],
   data() {
     return {
-      userInfo: this.userInfo,
+      userInfo: {},
       allDoctors: {},
     };
   },
@@ -16,12 +15,9 @@ export default {
       const response = await axios.get("http://localhost:8080/getAllDoctors");
       this.allDoctors = response.data;
     },
-    includesAuth(page) {
-      if (this.userInfo?.auths)
-        for (var userAuth of this.userInfo?.auths)
-          if (page.auth.length === 0 || page.auth.includes(userAuth))
-            return true
-      return false
+    async getUserInfo() {
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
     },
 
     deleteUser(dusername) {
@@ -38,6 +34,7 @@ export default {
     },
   },
   beforeMount() {
+    this.getUserInfo();
     this.getAllDoctors();
   },
   template: `
@@ -84,3 +81,5 @@ export default {
 </table>
       `,
 };
+
+

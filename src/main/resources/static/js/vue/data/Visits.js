@@ -4,10 +4,9 @@ export default {
   components: {
     axios
   },
-  props: ['userInfo'],
   data() {
     return {
-      userInfo: this.userInfo,
+      userInfo: {},
       allVisits: {},
       userAuthority: {},
       noVisits: null
@@ -29,6 +28,10 @@ export default {
 
       this.noVisits = (this.allVisits.length == 0);
     },
+    async getUserInfo() {
+      const { data } = await axios.get("http://localhost:8080/userInfo");
+      this.userInfo = data;
+    },
     deleteVisit(appId) {
 
       axios.post(`/deleteVisit`, null, {
@@ -43,6 +46,7 @@ export default {
     },
   },
   beforeMount() {
+    this.getUserInfo();
     this.getAllVisits();
   },
   template: `
